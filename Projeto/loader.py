@@ -1,6 +1,6 @@
 
-from texture import load_texture_from_file
-from utils import circular_sliding_window_of_three
+from Projeto.texture import load_texture_from_file
+from Projeto.utils import circular_sliding_window_of_three
 
 vertices_list = []
 textures_coord_list = []
