@@ -6,11 +6,11 @@ import math
 from numpy import random
 from PIL import Image
 
-from shader_s import Shader
+from Projeto.shader_s import Shader
 
-from loader import *
-from texture import *
-from utils import *
+from Projeto.loader import *
+from Projeto.texture import *
+from Projeto.utils import *
 
 # inicializando a janela
 glfw.init()
