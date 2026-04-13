@@ -40,3 +40,17 @@ glEnable( GL_BLEND )
 glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA )
 glEnable(GL_LINE_SMOOTH)
 
+# carrega modelo abobora
+vi_abobora, quantosV_abobora = load_obj_and_texture("objetos/abobora/abobora.obj", ["objetos/abobora/texturas/..."])
+
+def desenha_abobora(angle, r_x, r_y, r_z, t_x, t_y, t_z, s_x, s_y, s_z, textureId):
+
+    mat_model = model(angle, r_x, r_y, r_z, t_x, t_y, t_z, s_x, s_y, s_z)
+    loc_model = glGetUniformLocation(program, "model")
+    glUniformMatrix4fv(loc_model, 1, GL_TRUE, mat_model)
+           
+    #define id da textura do modelo
+    glBindTexture(GL_TEXTURE_2D, textureId)
+    
+    # desenha o modelo
+    glDrawArrays(GL_TRIANGLES, vi_abobora, quantosV_abobora) ## renderizando
