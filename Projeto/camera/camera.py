@@ -1,9 +1,7 @@
-
+from Projeto.main import ALTURA, LARGURA
 import glm
 
-from Projeto.main import ALTURA, LARGURA
 
-# eventos para modificar a posição da câmera
 #cameraPos   = glm.vec3(0.0,  0.0,  1.0);
 #cameraFront = glm.vec3(0.0,  0.0, -1.0);
 #cameraUp    = glm.vec3(0.0,  1.0,  0.0);
@@ -22,3 +20,4 @@ fov   =  45.0
 
 # timing
 deltaTime = 0.0	# time between current frame and last frame
+lastFrame = 0.0

@@ -1,6 +1,6 @@
-import glfw
-from OpenGL.GL import *
+import numpy as np
 from PIL import Image
+from OpenGL.GL import *
 
 def load_texture_from_file(texture_id, img_textura):
     print(texture_id)
