@@ -6,128 +6,68 @@ import math
 from numpy import random
 from PIL import Image
 
-from Projeto.shader_s import Shader
+from Projeto.graficos.shader_s import Shader
 
-from Projeto.loader import *
-from Projeto.texture import *
-from Projeto.utils import *
-from Projeto.window import init_window
-from Projeto.transforms import model, view, projection
-from Projeto.draw import desenha_objeto
-from Projeto.callbacks import *
+from Projeto.config.window import *
+from Projeto.graficos.buffer import *
+from Projeto.models.objetos import *
+from Projeto.camera.controls import *
+from Projeto.transformacoes_mat.transforms import *
 
-LARGURA = 700
 ALTURA = 700
+LARGURA = 700   
 
-# inicializando a janela
-window, program = init_window(LARGURA, ALTURA)
+window = create_window(LARGURA, ALTURA)
 
-# carrega modelo abobora
-vi_abobora, quantosV_abobora = load_obj_and_texture("objetos/abobora/abobora.obj", ["objetos/abobora/texturas/..."])
+ourShader = Shader("vertex_shader.vs", "fragment_shader.fs")
+ourShader.use()
 
+program = ourShader.getProgram()
 
-vertices_list = []    
-textures_coord_list = []
+# carrega caixa (modelo e texturas)
+verticeInicial_caixa, quantosVertices_caixa = load_obj_and_texture('objetos/caixa/caixa.obj', ['objetos/caixa/caixa.jpg', 'objetos/caixa/tijolos.jpg', 'objetos/caixa/matrix.jpg'])
 
-buffer_VBO = glGenBuffers(2)
+#objetos.py
 
-vertices = np.zeros(len(vertices_list), [("position", np.float32, 3)])
-vertices['position'] = vertices_list
+buffer = setup_buffers(vertices_list, textures_coord_list)
+# camera.py
 
-# Upload data
-glBindBuffer(GL_ARRAY_BUFFER, buffer_VBO[0])
-glBufferData(GL_ARRAY_BUFFER, vertices.nbytes, vertices, GL_STATIC_DRAW)
-stride = vertices.strides[0]
-offset = ctypes.c_void_p(0)
-loc_vertices = glGetAttribLocation(program, "position")
-glEnableVertexAttribArray(loc_vertices)
-glVertexAttribPointer(loc_vertices, 3, GL_FLOAT, False, stride, offset)
+# controls.py
 
 
-def key_event(window,key,scancode,action,mods):
-    global cameraPos, cameraFront, cameraUp, polygonal_mode
-
-    if key == glfw.KEY_ESCAPE and action == glfw.PRESS:
-        glfw.set_window_should_close(window, True)
-    
-    cameraSpeed = 50 * deltaTime
-    if key == glfw.KEY_W and (action == glfw.PRESS or action == glfw.REPEAT):
-        cameraPos += cameraSpeed * cameraFront
-    
-    if key == glfw.KEY_S and (action == glfw.PRESS or action == glfw.REPEAT):
-        cameraPos -= cameraSpeed * cameraFront
-    
-    if key == glfw.KEY_A and (action == glfw.PRESS or action == glfw.REPEAT):
-        cameraPos -= glm.normalize(glm.cross(cameraFront, cameraUp)) * cameraSpeed
-        
-    if key == glfw.KEY_D and (action == glfw.PRESS or action == glfw.REPEAT):
-        cameraPos += glm.normalize(glm.cross(cameraFront, cameraUp)) * cameraSpeed
-
-    if key == glfw.KEY_P and action == glfw.PRESS:
-        polygonal_mode = not polygonal_mode
-        
-
-def framebuffer_size_callback(window, largura, altura):
-
-    # make sure the viewport matches the new window dimensions note that width and 
-    # height will be significantly larger than specified on retina displays.
-    glViewport(0, 0, largura, altura)
-
-# glfw: whenever the mouse moves, this callback is called
-# -------------------------------------------------------
-def mouse_callback(window, xpos, ypos):
-    global cameraFront, lastX, lastY, firstMouse, yaw, pitch
-   
-    if (firstMouse):
-
-        lastX = xpos
-        lastY = ypos
-        firstMouse = False
-
-    xoffset = xpos - lastX
-    yoffset = lastY - ypos # reversed since y-coordinates go from bottom to top
-    lastX = xpos
-    lastY = ypos
-
-    sensitivity = 0.1 # change this value to your liking
-    xoffset *= sensitivity
-    yoffset *= sensitivity
-
-    yaw += xoffset
-    pitch += yoffset
-
-    # make sure that when pitch is out of bounds, screen doesn't get flipped
-    if (pitch > 89.0):
-        pitch = 89.0
-    if (pitch < -89.0):
-        pitch = -89.0
-
-    front = glm.vec3()
-    front.x = glm.cos(glm.radians(yaw)) * glm.cos(glm.radians(pitch))
-    front.y = glm.sin(glm.radians(pitch))
-    front.z = glm.sin(glm.radians(yaw)) * glm.cos(glm.radians(pitch))
-    cameraFront = glm.normalize(front)
-
-# glfw: whenever the mouse scroll wheel scrolls, this callback is called
-# ----------------------------------------------------------------------
-def scroll_callback(window, xoffset, yoffset):
-    global fov
-
-    fov -= yoffset
-    if (fov < 1.0):
-        fov = 1.0
-    if (fov > 45.0):
-        fov = 45.0
-    
-glfw.set_key_callback(window,key_event)
-glfw.set_framebuffer_size_callback(window, framebuffer_size_callback)
-glfw.set_cursor_pos_callback(window, mouse_callback)
-glfw.set_scroll_callback(window, scroll_callback)
-
-# tell GLFW to capture our mouse
-glfw.set_input_mode(window, glfw.CURSOR, glfw.CURSOR_DISABLED)
-
-
-# exibe a janela 
-# loop principal da janela, mas primeiro vou modularizar o código para ficar mais organizado
 glfw.show_window(window)
+
+glEnable(GL_DEPTH_TEST) ### importante para 3D
+polygonal_mode = False 
+
+while not glfw.window_should_close(window):
+
+    currentFrame = glfw.get_time()
+    deltaTime = currentFrame - lastFrame
+    lastFrame = currentFrame
+
+    glfw.poll_events() 
+       
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    
+    glClearColor(1.0, 1.0, 1.0, 1.0)
+    
+    if polygonal_mode:
+        glPolygonMode(GL_FRONT_AND_BACK,GL_LINE)
+    else:
+        glPolygonMode(GL_FRONT_AND_BACK,GL_FILL)
+
+    
+    #desenha_objeto(0.0, 0, 0, 1, 0, 0, -20, 1.5, 1.5, 1.5, 0)
+    
+    mat_view = view()
+    loc_view = glGetUniformLocation(program, "view")
+    glUniformMatrix4fv(loc_view, 1, GL_TRUE, mat_view)
+
+    mat_projection = projection()
+    loc_projection = glGetUniformLocation(program, "projection")
+    glUniformMatrix4fv(loc_projection, 1, GL_TRUE, mat_projection)    
+    
+    glfw.swap_buffers(window)
+
+glfw.terminate()
