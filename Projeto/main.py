@@ -6,34 +6,41 @@ import math
 from numpy import random
 from PIL import Image
 
-from Projeto.graficos.shader_s import Shader
+from graficos.shader_s import Shader
 
-from Projeto.config.window import *
-from Projeto.graficos.buffer import *
-from Projeto.models.objetos import *
-from Projeto.camera.controls import *
-from Projeto.transformacoes_mat.transforms import *
+from config.window import *
+from graficos.buffer import *
+from models.objetos import *
+from camera.controls import *
+from transformacoes_mat.transforms import *
 
 ALTURA = 700
 LARGURA = 700   
 
 window = create_window(LARGURA, ALTURA)
 
-ourShader = Shader("vertex_shader.vs", "fragment_shader.fs")
+ourShader = Shader("graficos/shaders/vertex_shader.vs", "graficos/shaders/fragment_shader.fs")
 ourShader.use()
 
 program = ourShader.getProgram()
 
-# carrega caixa (modelo e texturas)
-verticeInicial_caixa, quantosVertices_caixa = load_obj_and_texture('objetos/caixa/caixa.obj', ['objetos/caixa/caixa.jpg', 'objetos/caixa/tijolos.jpg', 'objetos/caixa/matrix.jpg'])
+# carrega modelos (casa e vela): PARA TESTE POR ENQUANTO, DEPOIS VOU ORGANIZAR MELHOR ISSO AQUI
+#verticeInicial_casa, quantosVertices_casa = load_obj_and_texture('objetos/casa/casa.obj', ['objetos/casa/texturas/casa.png'])
+#verticeInicial_vela, quantosVertices_vela = load_obj_and_texture('objetos/velas/velas.obj', ['objetos/velas/texturas/vela1.png'])
+verticeInicial_caixa, quantosVertices_caixa = load_obj_and_texture('objetos/caixa/caixa.obj', ['objetos/caixa/matrix.jpg'])
 
-#objetos.py
+buffer = setup_buffers(vertices_list, textures_coord_list, program)
 
-buffer = setup_buffers(vertices_list, textures_coord_list)
-# camera.py
+# configurações de controle da câmera
+glfw.set_key_callback(window,key_event)
+glfw.set_framebuffer_size_callback(window, framebuffer_size_callback)
+glfw.set_cursor_pos_callback(window, mouse_callback)
+glfw.set_scroll_callback(window, scroll_callback)
 
-# controls.py
+# tell GLFW to capture our mouse
+glfw.set_input_mode(window, glfw.CURSOR, glfw.CURSOR_DISABLED)
 
+init_camera(LARGURA, ALTURA)
 
 glfw.show_window(window)
 
@@ -57,14 +64,15 @@ while not glfw.window_should_close(window):
     else:
         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL)
 
-    
-    #desenha_objeto(0.0, 0, 0, 1, 0, 0, -20, 1.5, 1.5, 1.5, 0)
+    #desenha_objeto(program, verticeInicial_casa, quantosVertices_casa, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0)
+    #desenha_objeto(program, verticeInicial_vela, quantosVertices_vela, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0)
+    desenha_objeto(program, verticeInicial_caixa, quantosVertices_caixa, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0)
     
     mat_view = view()
     loc_view = glGetUniformLocation(program, "view")
     glUniformMatrix4fv(loc_view, 1, GL_TRUE, mat_view)
 
-    mat_projection = projection()
+    mat_projection = projection(ALTURA, LARGURA)
     loc_projection = glGetUniformLocation(program, "projection")
     glUniformMatrix4fv(loc_projection, 1, GL_TRUE, mat_projection)    
     

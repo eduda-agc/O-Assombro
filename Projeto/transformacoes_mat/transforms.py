@@ -1,6 +1,7 @@
 import math
 import glm
 import numpy as np
+from camera.controls import *
 
 def model(angle, r_x, r_y, r_z, t_x, t_y, t_z, s_x, s_y, s_z):
     
@@ -28,8 +29,7 @@ def view():
     mat_view = np.array(mat_view)
     return mat_view
 
-def projection():
-    global altura, largura
+def projection(altura, largura):
     # perspective parameters: fovy, aspect, near, far
     mat_projection = glm.perspective(glm.radians(fov), largura/altura, 0.1, 100.0)
 

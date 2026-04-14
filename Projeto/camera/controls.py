@@ -1,7 +1,33 @@
-from Projeto.camera.camera import *
 import glfw
-from Projeto.main import window
 from OpenGL.GL import *
+import glm
+
+# camera control variables
+#cameraPos   = glm.vec3(0.0,  0.0,  1.0);
+#cameraFront = glm.vec3(0.0,  0.0, -1.0);
+#cameraUp    = glm.vec3(0.0,  1.0,  0.0);
+
+# camera
+cameraPos   = glm.vec3(0.0, 0.0, 3.0)
+cameraFront = glm.vec3(0.0, 0.0, -1.0)
+cameraUp    = glm.vec3(0.0, 1.0, 0.0)
+
+firstMouse = True
+yaw   = -90.0	# yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
+pitch =  0.0
+lastX = 0
+lastY = 0
+
+def init_camera(largura, altura):
+    global lastX, lastY
+    lastX = largura / 2
+    lastY = altura / 2
+    
+fov   =  45.0
+
+# timing
+deltaTime = 0.0	# time between current frame and last frame
+lastFrame = 0.0
 
 def key_event(window,key,scancode,action,mods):
     global cameraPos, cameraFront, cameraUp, polygonal_mode
@@ -78,10 +104,3 @@ def scroll_callback(window, xoffset, yoffset):
     if (fov > 45.0):
         fov = 45.0
     
-glfw.set_key_callback(window,key_event)
-glfw.set_framebuffer_size_callback(window, framebuffer_size_callback)
-glfw.set_cursor_pos_callback(window, mouse_callback)
-glfw.set_scroll_callback(window, scroll_callback)
-
-# tell GLFW to capture our mouse
-glfw.set_input_mode(window, glfw.CURSOR, glfw.CURSOR_DISABLED)

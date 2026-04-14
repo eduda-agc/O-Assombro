@@ -1,6 +1,7 @@
+from PIL import Image
 from OpenGL.GL import *
-from Projeto.graficos.texture import *
-from Projeto.main import program
+from transformacoes_mat.transforms import *
+
 
 vertices_list = []    
 textures_coord_list = []
@@ -65,7 +66,7 @@ def circular_sliding_window_of_three(arr):
         result.extend(circular_arr[i:i+3])
     return result
 
-def desenha_objeto(verticeInicial,    quantosVertices, angle, r_x, r_y, r_z, t_x, t_y, t_z, s_x, s_y, s_z, textureId):
+def desenha_objeto(program, verticeInicial, quantosVertices, angle, r_x, r_y, r_z, t_x, t_y, t_z, s_x, s_y, s_z, textureId):
 
     mat_model = model(angle, r_x, r_y, r_z, t_x, t_y, t_z, s_x, s_y, s_z)
     loc_model = glGetUniformLocation(program, "model")
@@ -105,4 +106,18 @@ def load_obj_and_texture(objFile, texturesList):
         numberTextures += 1
     
     return verticeInicial, verticeFinal - verticeInicial
+
+def load_texture_from_file(texture_id, img_textura):
+    print(texture_id)
+    glBindTexture(GL_TEXTURE_2D, texture_id)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+    img = Image.open(img_textura)
+    img_width = img.size[0]
+    img_height = img.size[1]
+    image_data = img.tobytes("raw", "RGB", 0, -1)
+    #image_data = np.array(list(img.getdata()), np.uint8)
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img_width, img_height, 0, GL_RGB, GL_UNSIGNED_BYTE, image_data)
     

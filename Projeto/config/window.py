@@ -1,6 +1,6 @@
 from OpenGL.GL import *
 import glfw
-from Projeto.graficos.shader_s import Shader
+from graficos.shader_s import Shader
 
 def create_window(largura, altura):
     glfw.init()
