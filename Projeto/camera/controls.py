@@ -52,12 +52,6 @@ def key_event(window,key,scancode,action,mods):
         polygonal_mode = not polygonal_mode
         
 
-def framebuffer_size_callback(window, largura, altura):
-
-    # make sure the viewport matches the new window dimensions note that width and 
-    # height will be significantly larger than specified on retina displays.
-    glViewport(0, 0, largura, altura)
-
 # glfw: whenever the mouse moves, this callback is called
 # -------------------------------------------------------
 def mouse_callback(window, xpos, ypos):

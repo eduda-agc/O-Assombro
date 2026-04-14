@@ -7,11 +7,12 @@ from numpy import random
 from PIL import Image
 
 from graficos.shader_s import Shader
-
+import camera.controls as controls
+from camera.controls import *
 from config.window import *
 from graficos.buffer import *
 from models.objetos import *
-from camera.controls import *
+
 from transformacoes_mat.transforms import *
 
 ALTURA = 700
@@ -25,11 +26,17 @@ ourShader.use()
 program = ourShader.getProgram()
 
 # carrega modelos (casa e vela): PARA TESTE POR ENQUANTO, DEPOIS VOU ORGANIZAR MELHOR ISSO AQUI
-#verticeInicial_casa, quantosVertices_casa = load_obj_and_texture('objetos/casa/casa.obj', ['objetos/casa/texturas/casa.png'])
-#verticeInicial_vela, quantosVertices_vela = load_obj_and_texture('objetos/velas/velas.obj', ['objetos/velas/texturas/vela1.png'])
-verticeInicial_caixa, quantosVertices_caixa = load_obj_and_texture('objetos/caixa/caixa.obj', ['objetos/caixa/matrix.jpg'])
+verticeInicial_casa, quantosVertices_casa = load_obj_and_texture('objetos/casa/casa.obj', ['objetos/casa/texturas/casa.png'])
+verticeInicial_vela, quantosVertices_vela = load_obj_and_texture('objetos/velas/velas.obj', ['objetos/velas/texturas/vela1.png'])
+
 
 buffer = setup_buffers(vertices_list, textures_coord_list, program)
+
+def framebuffer_size_callback(window, largura, altura):
+
+    # make sure the viewport matches the new window dimensions note that width and 
+    # height will be significantly larger than specified on retina displays.
+    glViewport(0, 0, LARGURA, ALTURA)
 
 # configurações de controle da câmera
 glfw.set_key_callback(window,key_event)
@@ -50,8 +57,8 @@ polygonal_mode = False
 while not glfw.window_should_close(window):
 
     currentFrame = glfw.get_time()
-    deltaTime = currentFrame - lastFrame
-    lastFrame = currentFrame
+    controls.deltaTime = currentFrame - controls.lastFrame
+    controls.lastFrame = currentFrame
 
     glfw.poll_events() 
        
@@ -64,9 +71,8 @@ while not glfw.window_should_close(window):
     else:
         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL)
 
-    #desenha_objeto(program, verticeInicial_casa, quantosVertices_casa, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0)
-    #desenha_objeto(program, verticeInicial_vela, quantosVertices_vela, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0)
-    desenha_objeto(program, verticeInicial_caixa, quantosVertices_caixa, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0)
+    desenha_objeto(program, verticeInicial_casa, quantosVertices_casa, 0, 0, 1, 0, -20, -20, 0, 1, 1, 1, 0) # casa
+    desenha_objeto(program, verticeInicial_vela, quantosVertices_vela, 0, 0, 1, 0, 20, 20, 0, 1, 1, 1, 1) # vela
     
     mat_view = view()
     loc_view = glGetUniformLocation(program, "view")
