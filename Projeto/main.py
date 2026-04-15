@@ -26,9 +26,19 @@ ourShader.use()
 program = ourShader.getProgram()
 
 # carrega modelos (casa e vela): PARA TESTE POR ENQUANTO, DEPOIS VOU ORGANIZAR MELHOR ISSO AQUI
-verticeInicial_casa, quantosVertices_casa = load_obj_and_texture('objetos/casa/casa.obj', ['objetos/casa/texturas/casa.png'])
-verticeInicial_vela, quantosVertices_vela = load_obj_and_texture('objetos/velas/velas.obj', ['objetos/velas/texturas/vela1.png'])
+verticeInicial_casa, quantosVertices_casa, textura_casa = load_obj_and_texture(
+    'objetos/casa/casa.obj',
+    ['objetos/casa/texturas/casa.png']
+)
 
+verticeInicial_vela, quantosVertices_vela, textura_vela = load_obj_and_texture(
+    'objetos/velas/velas.obj',
+    ['objetos/velas/texturas/vela1.png']
+)
+
+# CRIAR VAO (OBRIGATÓRIO no macOS / OpenGL Core)
+VAO = glGenVertexArrays(1)
+glBindVertexArray(VAO)
 
 buffer = setup_buffers(vertices_list, textures_coord_list, program)
 
@@ -53,6 +63,7 @@ glfw.show_window(window)
 
 glEnable(GL_DEPTH_TEST) ### importante para 3D
 polygonal_mode = False 
+glUniform1i(glGetUniformLocation(program, "imagem"), 0)
 
 while not glfw.window_should_close(window):
 
@@ -71,9 +82,15 @@ while not glfw.window_should_close(window):
     else:
         glPolygonMode(GL_FRONT_AND_BACK,GL_FILL)
 
-    desenha_objeto(program, verticeInicial_casa, quantosVertices_casa, 0, 0, 1, 0, -20, -20, 0, 1, 1, 1, 0) # casa
-    desenha_objeto(program, verticeInicial_vela, quantosVertices_vela, 0, 0, 1, 0, 20, 20, 0, 1, 1, 1, 1) # vela
-    
+    glActiveTexture(GL_TEXTURE0)
+
+    desenha_objeto(program, verticeInicial_casa, quantosVertices_casa,
+               0, 0, 1, 0, -20, -20, 0, 1, 1, 1,
+               textura_casa[0])
+
+    desenha_objeto(program, verticeInicial_vela, quantosVertices_vela,
+               0, 0, 1, 0, 20, 20, 0, 1, 1, 1,
+               textura_vela[0])
     mat_view = view()
     loc_view = glGetUniformLocation(program, "view")
     glUniformMatrix4fv(loc_view, 1, GL_TRUE, mat_view)

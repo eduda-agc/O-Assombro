@@ -6,6 +6,12 @@ def create_window(largura, altura):
     glfw.init()
     glfw.window_hint(glfw.VISIBLE, glfw.FALSE)
 
+    # 🔥 ADICIONAR ISSO
+    glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
+    glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 2)
+    glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
+    glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, True)
+
     altura = 700
     largura = 700
 
@@ -17,9 +23,9 @@ def create_window(largura, altura):
         
     glfw.make_context_current(window)
 
-    glEnable(GL_TEXTURE_2D)
     glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE)
-    glEnable( GL_BLEND )
-    glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA )
+    glEnable(GL_BLEND)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     glEnable(GL_LINE_SMOOTH)
+
     return window
