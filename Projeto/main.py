@@ -36,6 +36,11 @@ verticeInicial_vela, quantosVertices_vela, textura_vela = load_obj_and_texture(
     ['objetos/velas/texturas/vela1.png']
 )
 
+verticeInicial_lanterna, quantosVertices_lanterna, textura_lanterna = load_obj_and_texture(
+    'objetos/lanterna/lanterna.obj',
+    ['objetos/lanterna/texturas/body_TT_checker_512x512_UV_GRID_BaseColor.jpg']
+)
+
 # CRIAR VAO (OBRIGATÓRIO no macOS / OpenGL Core)
 VAO = glGenVertexArrays(1)
 glBindVertexArray(VAO)
@@ -91,6 +96,8 @@ while not glfw.window_should_close(window):
     desenha_objeto(program, verticeInicial_vela, quantosVertices_vela,
                0, 0, 1, 0, 20, 20, 0, 1, 1, 1,
                textura_vela[0])
+    desenha_objeto(program, verticeInicial_lanterna, quantosVertices_lanterna, 0, 0, 1, 0, -10, -10, 0, 0.7, 0.7, 0.7, textura_lanterna[0])
+
     mat_view = view()
     loc_view = glGetUniformLocation(program, "view")
     glUniformMatrix4fv(loc_view, 1, GL_TRUE, mat_view)
