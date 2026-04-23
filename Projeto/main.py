@@ -27,18 +27,15 @@ program = ourShader.getProgram()
 
 # carrega modelos (casa e vela): PARA TESTE POR ENQUANTO, DEPOIS VOU ORGANIZAR MELHOR ISSO AQUI
 verticeInicial_casa, quantosVertices_casa, textura_casa = load_obj_and_texture(
-    'objetos/casa/casa.obj',
-    ['objetos/casa/texturas/casa.png']
-)
-
-verticeInicial_vela, quantosVertices_vela, textura_vela = load_obj_and_texture(
-    'objetos/velas/velas.obj',
-    ['objetos/velas/texturas/vela1.png']
+    'objetos/casa/casa.obj', ['objetos/casa/casa.png']
 )
 
 verticeInicial_lanterna, quantosVertices_lanterna, textura_lanterna = load_obj_and_texture(
-    'objetos/lanterna/lanterna.obj',
-    ['objetos/lanterna/texturas/body_TT_checker_512x512_UV_GRID_BaseColor.jpg']
+    'objetos/lanterna/lanterna.obj', ['objetos/lanterna/body_TT_checker_512x512_UV_GRID_BaseColor.jpg']
+)
+
+verticeInicial_camaVelha, quantosVertices_camaVelha, textura_camaVelha = load_obj_and_texture(
+    'objetos/camaVelha/camaVelha.obj', ['objetos/camaVelha/camaVelha.png']
 )
 
 # CRIAR VAO (OBRIGATÓRIO no macOS / OpenGL Core)
@@ -92,11 +89,11 @@ while not glfw.window_should_close(window):
     desenha_objeto(program, verticeInicial_casa, quantosVertices_casa,
                0, 0, 1, 0, -20, -20, 0, 1, 1, 1,
                textura_casa[0])
+    
+    desenha_objeto(program, verticeInicial_lanterna, quantosVertices_lanterna, 
+                   0, 0, 1, 0, -10, -10, 0, 0.7, 0.7, 0.7, 
+                   textura_lanterna[0])
 
-    desenha_objeto(program, verticeInicial_vela, quantosVertices_vela,
-               0, 0, 1, 0, 20, 20, 0, 1, 1, 1,
-               textura_vela[0])
-    desenha_objeto(program, verticeInicial_lanterna, quantosVertices_lanterna, 0, 0, 1, 0, -10, -10, 0, 0.7, 0.7, 0.7, textura_lanterna[0])
 
     mat_view = view()
     loc_view = glGetUniformLocation(program, "view")
