@@ -30,13 +30,25 @@ verticeInicial_casa, quantosVertices_casa, textura_casa = load_obj_and_texture(
     'objetos/casa/casa.obj', ['objetos/casa/casa.png']
 )
 
-verticeInicial_lanterna, quantosVertices_lanterna, textura_lanterna = load_obj_and_texture(
-    'objetos/lanterna/lanterna.obj', ['objetos/lanterna/body_TT_checker_512x512_UV_GRID_BaseColor.jpg']
+verticeInicial_camaVelha, quantosVertices_camaVelha, textura_camaVelha = load_obj_and_texture(
+    'objetos/cama_velha/cama_velha.obj', ['objetos/cama_velha/cama_velha.png']
 )
 
-verticeInicial_camaVelha, quantosVertices_camaVelha, textura_camaVelha = load_obj_and_texture(
-    'objetos/camaVelha/camaVelha.obj', ['objetos/camaVelha/camaVelha.png']
+verticeInicial_abobora, quantosVertices_abobora, textura_abobora = load_obj_and_texture(
+    'objetos/abobora/abobora.obj', ['objetos/abobora/abobora.png']
 )
+
+verticeInicial_capa2, quantosVertices_capa2, textura_capa2 = load_obj_and_texture(
+    'objetos/capas/capa2.obj', ['objetos/capas/textura_capas.png']
+)
+
+verticeInicial_capaArrasta, quantosVertices_capaArrasta, textura_capaArrasta = load_obj_and_texture(
+    'objetos/capas/capaArrasta.obj', ['objetos/capas/textura_capas.png']
+)
+
+verticeInicial_fantasma_puido, quantosVertices_fantasma_puido, textura_fantasma_puido = load_obj_and_texture(
+    'objetos/fantasma_puido/fantasma_puido.obj', ['objetos/fantasma_puido/textura_unificada.png']
+)   
 
 # CRIAR VAO (OBRIGATÓRIO no macOS / OpenGL Core)
 VAO = glGenVertexArrays(1)
@@ -86,13 +98,50 @@ while not glfw.window_should_close(window):
 
     glActiveTexture(GL_TEXTURE0)
 
+
     desenha_objeto(program, verticeInicial_casa, quantosVertices_casa,
-               0, 0, 1, 0, -20, -20, 0, 1, 1, 1,
+               0, #angulo
+               0, 1, 0, #eixo de rotação (x, y, z)
+               0, 0, 0, #translação (x, y, z)
+               0.5, 0.5, 0.5, #escala (x, y, z)
                textura_casa[0])
     
-    desenha_objeto(program, verticeInicial_lanterna, quantosVertices_lanterna, 
-                   0, 0, 1, 0, -10, -10, 0, 0.7, 0.7, 0.7, 
-                   textura_lanterna[0])
+    # a cama velha está dentro da casa
+    desenha_objeto(program, verticeInicial_camaVelha, quantosVertices_camaVelha, 
+                0, #angulo
+                0, 1, 0, #eixo de rotação (x, y, z)
+                5, 0, 0, #translação (x, y, z)
+                0.01, 0.01, 0.01, #escala (x, y, z)
+                textura_camaVelha[0])   
+    
+    desenha_objeto(program, verticeInicial_abobora, quantosVertices_abobora,
+                0, #angulo
+                0, 1, 0, #eixo de rotação (x, y, z)
+                10, 0, 0, #translação (x, y, z)
+                1, 1, 1, #escala (x, y, z)
+                textura_abobora[0])
+    
+    desenha_objeto(program, verticeInicial_capa2, quantosVertices_capa2,
+                0, #angulo
+                0, 1, 0, #eixo de rotação (x, y, z)
+                15, 0, 0, #translação (x, y, z)
+                1, 1, 1, #escala (x, y, z)
+                textura_capa2[0])
+    
+    desenha_objeto(program, verticeInicial_capaArrasta, quantosVertices_capaArrasta,
+                0, #angulo
+                0, 1, 0, #eixo de rotação (x, y, z)
+                20, 0, 0, #translação (x, y, z)
+                1, 1, 1, #escala (x, y, z)
+                textura_capaArrasta[0])
+    
+    desenha_objeto(program, verticeInicial_fantasma_puido, quantosVertices_fantasma_puido,
+                0, #angulo
+                0, 1, 0, #eixo de rotação (x, y, z)
+                25, 0, 0, #translação (x, y, z)
+                1, 1, 1, #escala (x, y, z)
+                textura_fantasma_puido[0])
+
 
 
     mat_view = view()
