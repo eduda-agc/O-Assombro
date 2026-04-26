@@ -76,7 +76,8 @@ while not glfw.window_should_close(window):
 
     glActiveTexture(GL_TEXTURE0)
 
-    desenha_objetos(program)
+    desenha_ambiente(program, False)
+    desenha_objetos(program, True)
 
     mat_view = view()
     loc_view = glGetUniformLocation(program, "view")
