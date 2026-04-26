@@ -1,6 +1,7 @@
 import glfw
 from OpenGL.GL import *
 import glm
+import math 
 
 # camera control variables
 #cameraPos   = glm.vec3(0.0,  0.0,  1.0);
@@ -11,6 +12,16 @@ import glm
 cameraPos   = glm.vec3(0.0, 0.0, 3.0)
 cameraFront = glm.vec3(0.0, 0.0, -1.0)
 cameraUp    = glm.vec3(0.0, 1.0, 0.0)
+
+# "head bob"
+headbob_enabled = True
+headbob_phase = 0.0
+headbob_offset = glm.vec3(0.0, 0.0, 0.0)
+
+move_forward = False
+move_backward = False
+move_left = False
+move_right = False
 
 firstMouse = True
 yaw   = -90.0	# yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
@@ -29,27 +40,52 @@ fov   =  45.0
 deltaTime = 0.0	# time between current frame and last frame
 lastFrame = 0.0
 
-def key_event(window,key,scancode,action,mods):
+def key_event(window, key, scancode, action, mods):
     global cameraPos, cameraFront, cameraUp, polygonal_mode
+    global move_forward, move_backward, move_left, move_right
+    global headbob_enabled
 
     if key == glfw.KEY_ESCAPE and action == glfw.PRESS:
         glfw.set_window_should_close(window, True)
-    
-    cameraSpeed = 50 * deltaTime
-    if key == glfw.KEY_W and (action == glfw.PRESS or action == glfw.REPEAT):
-        cameraPos += cameraSpeed * cameraFront
-    
-    if key == glfw.KEY_S and (action == glfw.PRESS or action == glfw.REPEAT):
-        cameraPos -= cameraSpeed * cameraFront
-    
-    if key == glfw.KEY_A and (action == glfw.PRESS or action == glfw.REPEAT):
-        cameraPos -= glm.normalize(glm.cross(cameraFront, cameraUp)) * cameraSpeed
-        
-    if key == glfw.KEY_D and (action == glfw.PRESS or action == glfw.REPEAT):
-        cameraPos += glm.normalize(glm.cross(cameraFront, cameraUp)) * cameraSpeed
 
     if key == glfw.KEY_P and action == glfw.PRESS:
         polygonal_mode = not polygonal_mode
+
+    #tecla para ligar/desligar o head bob
+    if key == glfw.KEY_H and action == glfw.PRESS:
+        headbob_enabled = not headbob_enabled
+
+    cameraSpeed = 9 * deltaTime
+
+    if key == glfw.KEY_W:
+        move_forward = (action == glfw.PRESS or action == glfw.REPEAT)
+        if move_forward:
+            cameraPos += cameraSpeed * cameraFront
+
+    if key == glfw.KEY_S:
+        move_backward = (action == glfw.PRESS or action == glfw.REPEAT)
+        if move_backward:
+            cameraPos -= cameraSpeed * cameraFront
+
+    if key == glfw.KEY_A:
+        move_left = (action == glfw.PRESS or action == glfw.REPEAT)
+        if move_left:
+            cameraPos -= glm.normalize(glm.cross(cameraFront, cameraUp)) * cameraSpeed
+
+    if key == glfw.KEY_D:
+        move_right = (action == glfw.PRESS or action == glfw.REPEAT)
+        if move_right:
+            cameraPos += glm.normalize(glm.cross(cameraFront, cameraUp)) * cameraSpeed
+
+    if action == glfw.RELEASE:
+        if key == glfw.KEY_W:
+            move_forward = False
+        if key == glfw.KEY_S:
+            move_backward = False
+        if key == glfw.KEY_A:
+            move_left = False
+        if key == glfw.KEY_D:
+            move_right = False
         
 
 # glfw: whenever the mouse moves, this callback is called
@@ -98,3 +134,31 @@ def scroll_callback(window, xoffset, yoffset):
     if (fov > 45.0):
         fov = 45.0
     
+
+#calcula o balanço
+
+def update_headbob():
+    global headbob_phase, headbob_offset
+
+    moving = move_forward or move_backward or move_left or move_right
+
+    if headbob_enabled and moving:
+        #intensidade média estilo FPS
+        bob_speed = 12.0
+        bob_side = 0.15  
+        bob_up = 0.10     
+
+        headbob_phase += deltaTime * bob_speed
+
+        right = glm.normalize(glm.cross(cameraFront, cameraUp))
+
+        target_offset = (
+            right * math.sin(headbob_phase) * bob_side +
+            cameraUp * abs(math.cos(headbob_phase * 2.0)) * bob_up
+        )
+    else:
+        target_offset = glm.vec3(0.0, 0.0, 0.0)
+
+    #suaviza a transição quando começa/para de andar
+    smooth = min(1.0, deltaTime * 12.0)
+    headbob_offset += (target_offset - headbob_offset) * smooth

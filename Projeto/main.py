@@ -12,7 +12,8 @@ from camera.controls import *
 from config.window import *
 from graficos.buffer import *
 from models.objetos import *
-from models.lista_objetos import *
+import models.lista_objetos as objs
+
 
 from transformacoes_mat.transforms import *
 
@@ -29,7 +30,7 @@ ourShader.use()
 
 program = ourShader.getProgram()
 
-load_objetos()  
+objs.load_objetos()  
 
 # CRIAR VAO (OBRIGATÓRIO no macOS / OpenGL Core)
 VAO = glGenVertexArrays(1)
@@ -76,6 +77,7 @@ while not glfw.window_should_close(window):
     currentFrame = glfw.get_time()
     controls.deltaTime = currentFrame - controls.lastFrame
     controls.lastFrame = currentFrame
+    controls.update_headbob()
 
     glfw.poll_events() 
        
@@ -90,9 +92,9 @@ while not glfw.window_should_close(window):
 
     glActiveTexture(GL_TEXTURE0)
 
-    desenha_opacos(program, True) 
-    desenha_arvores(program, True, posicoes_arvores)
-    desenha_transparentes(program, True)
+    objs.desenha_opacos(program, True) 
+    objs.desenha_arvores(program, True, posicoes_arvores)
+    objs.desenha_transparentes(program, True)
 
     #mat = transformacoes();
 
@@ -100,11 +102,24 @@ while not glfw.window_should_close(window):
     loc_view = glGetUniformLocation(program, "view")
     glUniformMatrix4fv(loc_view, 1, GL_TRUE, mat_view)
 
-    #mat_projection = perspective(45, LARGURA/LARGURA, 0.1, 100) #perspectiva
-
     mat_projection = projection(ALTURA, LARGURA)
     loc_projection = glGetUniformLocation(program, "projection")
-    glUniformMatrix4fv(loc_projection, 1, GL_TRUE, mat_projection)    
+    glUniformMatrix4fv(loc_projection, 1, GL_TRUE, mat_projection)
+
+    objs.desenha_opacos(program, True)
+    objs.desenha_arvores(program, True, posicoes_arvores)
+    objs.desenha_transparentes(program, True)  
+
+    #objeto na mao
+    glDisable(GL_DEPTH_TEST)
+    objs.desenha_item_mao(
+        program,
+        objs.verticeInicial_lampada_mao,   
+        objs.quantosVertices_lampada_mao,
+        objs.textura_lampada_mao[0]
+    )
+
+    glEnable(GL_DEPTH_TEST)
     
     glfw.swap_buffers(window)
 

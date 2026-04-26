@@ -13,12 +13,21 @@ def load_objetos():
     global verticeInicial_casa_amarela, quantosVertices_casa_amarela, textura_casa_amarela
     global verticeInicial_casa_simples, quantosVertices_casa_simples, textura_casa_simples
     global verticeInicial_fantasma_puido, quantosVertices_fantasma_puido, textura_fantasma_puido
+    global verticeInicial_garota_horror, quantosVertices_garota_horror, textura_garota_horror
+    global verticeInicial_lampada_mao, quantosVertices_lampada_mao, textura_lampada_mao
     global verticeInicial_lanterna, quantosVertices_lanterna, textura_lanterna
+    global verticeInicial_lua, quantosVertices_lua, textura_lua
     global verticeInicial_mascara_sinistra, quantosVertices_mascara_sinistra, textura_mascara_sinistra
     global verticeInicial_mesa_redonda, quantosVertices_mesa_redonda, textura_mesa_redonda
     global verticeInicial_mesa_retangular, quantosVertices_mesa_retangular, textura_mesa_retangular
     global verticeInicial_sofa_marrom, quantosVertices_sofa_marrom, textura_sofa_marrom
     global verticeInicial_sofa_torto, quantosVertices_sofa_torto, textura_sofa_torto
+    global verticeInicial_vela_parede, quantosVertices_vela_parede, textura_vela_parede
+    global verticeInicial_vela_simples1, quantosVertices_vela_simples1, textura_vela_simples1
+    global verticeInicial_vela_simples2, quantosVertices_vela_simples2, textura_vela_simples2
+    global verticeInicial_vela_simples3, quantosVertices_vela_simples3, textura_vela_simples3
+
+    #ambiente
     global verticeInicial_chao, quantosVertices_chao, textura_chao
     global verticeInicial_arvore, quantosVertices_arvore, textura_arvore
 
@@ -42,7 +51,13 @@ def load_objetos():
 
     verticeInicial_fantasma_puido, quantosVertices_fantasma_puido, textura_fantasma_puido = load_obj_and_texture('objetos/fantasma_puido/fantasma_puido.obj', ['objetos/fantasma_puido/textura_unificada.png'])
 
+    verticeInicial_garota_horror, quantosVertices_garota_horror, textura_garota_horror = load_obj_and_texture('objetos/garota_horror/garota_horror.obj', ['objetos/garota_horror/textura_unificada.png'])
+    
+    verticeInicial_lampada_mao, quantosVertices_lampada_mao, textura_lampada_mao  = load_obj_and_texture('objetos/lampada_mao/lampada_mao.obj', ['objetos/lampada_mao/lampada_mao.png'])
+
     verticeInicial_lanterna, quantosVertices_lanterna, textura_lanterna = load_obj_and_texture('objetos/lanterna/lanterna.obj', ['objetos/lanterna/lanterna.jpg'])
+
+    verticeInicial_lua, quantosVertices_lua, textura_lua = load_obj_and_texture('objetos/lua/lua.obj', ['objetos/lua/lua.png'])
 
     verticeInicial_mascara_sinistra, quantosVertices_mascara_sinistra, textura_mascara_sinistra = load_obj_and_texture('objetos/mascara_sinistra/mascara_sinistra.obj', ['objetos/mascara_sinistra/mascara_sinistra.jpg'])
 
@@ -53,6 +68,14 @@ def load_objetos():
     verticeInicial_sofa_marrom, quantosVertices_sofa_marrom, textura_sofa_marrom = load_obj_and_texture('objetos/sofa_marrom/sofa_marrom.obj', ['objetos/sofa_marrom/sofa_marrom.jpg'])
 
     verticeInicial_sofa_torto, quantosVertices_sofa_torto, textura_sofa_torto = load_obj_and_texture('objetos/sofa_torto/sofa_torto.obj', ['objetos/sofa_torto/sofa_torto.jpg'])
+
+    verticeInicial_vela_parede, quantosVertices_vela_parede, textura_vela_parede = load_obj_and_texture('objetos/vela_parede/vela_parede.obj', ['objetos/vela_parede/textura_unificada.png'])
+
+    verticeInicial_vela_simples1, quantosVertices_vela_simples1, textura_vela_simples1 = load_obj_and_texture('objetos/velas_simples/vela1.obj', ['objetos/velas_simples/vela1.png'])
+
+    verticeInicial_vela_simples2, quantosVertices_vela_simples2, textura_vela_simples2 = load_obj_and_texture('objetos/velas_simples/vela2.obj', ['objetos/velas_simples/vela2.png'])
+
+    verticeInicial_vela_simples3, quantosVertices_vela_simples3, textura_vela_simples3 = load_obj_and_texture('objetos/velas_simples/vela3.obj', ['objetos/velas_simples/vela3.png'])
 
     ## objetos do ambiente
     verticeInicial_chao, quantosVertices_chao, textura_chao = load_obj_and_texture('objetos/ambiente/chao/chao.obj', ['objetos/ambiente/chao/chao.jpg'])
@@ -68,110 +91,156 @@ def desenha_opacos(program, desenha):
                        0, 0, 0, #translação (x, y, z)
                        0.5, 0.5, 0.5, #escala (x, y, z)
                        textura_abobora[0])
-        desenha_objeto(program, verticeInicial_abobora, quantosVertices_abobora,
-                0, #angulo
-                0, 1, 0, #eixo de rotação (x, y, z)
-                0, 0, 0, #translação (x, y, z)
-                0.5, 0.5, 0.5, #escala (x, y, z)
-                textura_abobora[0])
         
         desenha_objeto(program, verticeInicial_cadeiras, quantosVertices_cadeiras,
                     0, #angulo
                     0, 1, 0, #eixo de rotação (x, y, z)
-                    5, 0, 0, #translação (x, y, z)
+                    3, 0, 0, #translação (x, y, z)
                     0.5, 0.5, 0.5, #escala (x, y, z)
                     textura_cadeiras[0])
         
         desenha_objeto(program, verticeInicial_camaVelha, quantosVertices_camaVelha,
                     0, #angulo
                     0, 1, 0, #eixo de rotação (x, y, z)
-                    10, 0, 0, #translação (x, y, z)
+                    6, 0, 0, #translação (x, y, z)
                     0.001, 0.001, 0.001, #escala (x, y, z)
                     textura_camaVelha[0])   
 
         desenha_objeto(program, verticeInicial_capa1, quantosVertices_capa1,
                     0, #angulo
                     0, 1, 0, #eixo de rotação (x, y, z)
-                    15, 0, 0, #translação (x, y, z)
+                    9, 0, 0, #translação (x, y, z)
                     0.5, 0.5, 0.5, #escala (x, y, z)
                     textura_capa1[0]) 
         
         desenha_objeto(program, verticeInicial_capa2, quantosVertices_capa2,
                     0, #angulo
                     0, 1, 0, #eixo de rotação (x, y, z)
-                    20, 0, 0, #translação (x, y, z)
+                    12, 0, 0, #translação (x, y, z)
                     0.5, 0.5, 0.5, #escala (x, y, z)
                     textura_capa2[0])
         
         desenha_objeto(program, verticeInicial_capaArrasta, quantosVertices_capaArrasta,
                     0, #angulo
                     0, 1, 0, #eixo de rotação (x, y, z)
-                    25, 0, 0, #translação (x, y, z)
+                    15, 0, 0, #translação (x, y, z)
                     0.5, 0.5, 0.5, #escala (x, y, z)
                     textura_capaArrasta[0])
         
         desenha_objeto(program, verticeInicial_carro, quantosVertices_carro,
                     0, #angulo
                     0, 1, 0, #eixo de rotação (x, y, z)
-                    30, 0, 0, #translação (x, y, z)
+                    18, 0, 0, #translação (x, y, z)
                     0.001, 0.001, 0.001, #escala (x, y, z)
                     textura_carro[0])
         
         desenha_objeto(program, verticeInicial_casa_amarela, quantosVertices_casa_amarela,
                     0, #angulo
                     0, 1, 0, #eixo de rotação (x, y, z)
-                    35, 0, 0, #translação (x, y, z)
+                    21, 0, 0, #translação (x, y, z)
                     0.5, 0.5, 0.5, #escala (x, y, z)
                     textura_casa_amarela[0])
         
         desenha_objeto(program, verticeInicial_casa_simples, quantosVertices_casa_simples,
                     0, #angulo
                     0, 1, 0, #eixo de rotação (x, y, z)
-                    40, 0, 0, #translação (x, y, z)
+                    26, 0, 0, #translação (x, y, z)
                     0.05, 0.05, 0.05, #escala (x, y, z)
                     textura_casa_simples[0])
+        
+        ## FANTASMA PUIDO NOS TRANSPARENTES
+        
+        desenha_objeto(program, verticeInicial_garota_horror, quantosVertices_garota_horror,
+                    0, #angulo
+                    0, 1, 0, #eixo de rotação (x, y, z)
+                    30, 0, 0, #translação (x, y, z)
+                    0.005, 0.005, 0.005, #escala (x, y, z)
+                    textura_garota_horror[0])
+        
+        desenha_objeto(program, verticeInicial_lampada_mao, quantosVertices_lampada_mao,
+                    0, #angulo
+                    0, 1, 0, #eixo de rotação (x, y, z)
+                    33, 0, 0, #translação (x, y, z)
+                    0.05, 0.05, 0.05, #escala (x, y, z)
+                    textura_lampada_mao[0])
+        
+        desenha_objeto(program, verticeInicial_lua, quantosVertices_lua,
+                    0, #angulo
+                    0, 1, 0, #eixo de rotação (x, y, z)
+                    36, 0, 0, #translação (x, y, z)
+                    0.5, 0.5, 0.5, #escala (x, y, z)
+                    textura_lua[0])
+    
         
         desenha_objeto(program, verticeInicial_lanterna, quantosVertices_lanterna,
                     0, #angulo
                     0, 1, 0, #eixo de rotação (x, y, z)
-                    50, 0, 0, #translação (x, y, z)
+                    39, 0, 0, #translação (x, y, z)
                     0.5, 0.5, 0.5, #escala (x, y, z)
                     textura_lanterna[0])
         
         desenha_objeto(program, verticeInicial_mascara_sinistra, quantosVertices_mascara_sinistra,
                     0, #angulo
                     0, 1, 0, #eixo de rotação (x, y, z)
-                    55, 0, 0, #translação (x, y, z)
+                    42, 0, 0, #translação (x, y, z)
                     0.5, 0.5, 0.5, #escala (x, y, z)
                     textura_mascara_sinistra[0])
         
         desenha_objeto(program, verticeInicial_mesa_redonda, quantosVertices_mesa_redonda,
                     0, #angulo
                     0, 1, 0, #eixo de rotação (x, y, z)
-                    60, 0, 0, #translação (x, y, z)
+                    45, 0, 0, #translação (x, y, z)
                     0.5, 0.5, 0.5, #escala (x, y, z)
                     textura_mesa_redonda[0])
         
         desenha_objeto(program, verticeInicial_mesa_retangular, quantosVertices_mesa_retangular,
                     0, #angulo
                     0, 1, 0, #eixo de rotação (x, y, z)
-                    65, 0, 0, #translação (x, y, z)
+                    48, 0, 0, #translação (x, y, z)
                     0.5, 0.5, 0.5, #escala (x, y, z)
                     textura_mesa_retangular[0])
         
         desenha_objeto(program, verticeInicial_sofa_marrom, quantosVertices_sofa_marrom,
                     0, #angulo
                     0, 1, 0, #eixo de rotação (x, y, z)
-                    46, 0, 0, #translação (x, y, z)
+                    51, 0, 0, #translação (x, y, z)
                     0.5, 0.5, 0.5, #escala (x, y, z)
                     textura_sofa_marrom[0])
         
         desenha_objeto(program, verticeInicial_sofa_torto, quantosVertices_sofa_torto,
                     0, #angulo
                     0, 1, 0, #eixo de rotação (x, y, z)
-                    75, 0, 0, #translação (x, y, z)
+                    54, 0, 0, #translação (x, y, z)
                     0.5, 0.5, 0.5, #escala (x, y, z)
                     textura_sofa_torto[0])   
+        
+        desenha_objeto(program, verticeInicial_vela_parede, quantosVertices_vela_parede,
+                    0, #angulo
+                    0, 1, 0, #eixo de rotação (x, y, z)
+                    57, 0, 0, #translação (x, y, z)
+                    0.01, 0.01, 0.01, #escala (x, y, z)
+                    textura_vela_parede[0])
+
+        desenha_objeto(program, verticeInicial_vela_simples1, quantosVertices_vela_simples1,
+                    0, #angulo
+                    0, 1, 0, #eixo de rotação (x, y, z)
+                    60, 0, 0, #translação (x, y, z)
+                    1, 1, 1, #escala (x, y, z)
+                    textura_vela_simples1[0])
+
+        desenha_objeto(program, verticeInicial_vela_simples2, quantosVertices_vela_simples2,
+                    0, #angulo
+                    0, 1, 0, #eixo de rotação (x, y, z)
+                    62, 0, 0, #translação (x, y, z)
+                    1, 1, 1, #escala (x, y, z)
+                    textura_vela_simples2[0]) 
+
+        desenha_objeto(program, verticeInicial_vela_simples2, quantosVertices_vela_simples2,
+                    0, #angulo
+                    0, 1, 0, #eixo de rotação (x, y, z)
+                    64, 0, 0, #translação (x, y, z)
+                    1, 1, 1, #escala (x, y, z)
+                    textura_vela_simples2[0])       
         
         ## para ambiente
         desenha_objeto(program, verticeInicial_chao, quantosVertices_chao,
@@ -199,10 +268,43 @@ def desenha_transparentes(program, desenha):
         desenha_objeto(program, verticeInicial_fantasma_puido, quantosVertices_fantasma_puido,
                     0, #angulo
                     0, 1, 0, #eixo de rotação (x, y, z)
-                    45, 0, 0, #translação (x, y, z)
+                    28, 0, 0, #translação (x, y, z)
                     0.5, 0.5, 0.5, #escala (x, y, z)
                     textura_fantasma_puido[0])
         
+def desenha_item_mao(program, verticeInicial, quantosVertices, textura):
+    import camera.controls as controls
+    import glm
+
+    #vetor direita da cammera
+    right = glm.normalize(glm.cross(controls.cameraFront, controls.cameraUp))
+
+    #offsets 
+    offset_frente = 0.5
+    offset_direita = 0.3
+    offset_cima = -0.2
+
+    #posição final
+    pos = (
+        controls.cameraPos
+        + controls.cameraFront * offset_frente
+        + right * offset_direita
+        + controls.cameraUp * offset_cima
+    )
+
+    #acompanha  a cabeça do bobo
+    pos += controls.headbob_offset * 0.5
+
+    desenha_objeto(
+        program,
+        verticeInicial,
+        quantosVertices,
+        0,
+        0, 1, 0,
+        pos.x, pos.y, pos.z,
+        0.05, 0.05, 0.05,
+        textura
+    )
         
         
         

@@ -24,10 +24,9 @@ def model(angle, r_x, r_y, r_z, t_x, t_y, t_z, s_x, s_y, s_z):
     return matrix_transform
 
 def view():
-    global cameraPos, cameraFront, cameraUp
-    mat_view = glm.lookAt(controls.cameraPos, controls.cameraPos + controls.cameraFront, controls.cameraUp);
-    mat_view = np.array(mat_view)
-    return mat_view
+    pos = controls.cameraPos + controls.headbob_offset
+    mat_view = glm.lookAt(pos, pos + controls.cameraFront, controls.cameraUp)
+    return np.array(mat_view)
 
 def projection(altura, largura):
     # perspective parameters: fovy, aspect, near, far

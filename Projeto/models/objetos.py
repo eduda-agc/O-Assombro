@@ -179,3 +179,4 @@ def desenha_objeto(program, verticeInicial, quantosVertices,
         glBindTexture(GL_TEXTURE_2D, textureId)
 
     glDrawArrays(GL_TRIANGLES, verticeInicial, quantosVertices)
+
