@@ -1,4 +1,6 @@
 from models.objetos import desenha_objeto, load_obj_and_texture
+import random
+import numpy as np
 
 def load_objetos():
     global verticeInicial_abobora, quantosVertices_abobora, textura_abobora
@@ -17,6 +19,8 @@ def load_objetos():
     global verticeInicial_mesa_retangular, quantosVertices_mesa_retangular, textura_mesa_retangular
     global verticeInicial_sofa_marrom, quantosVertices_sofa_marrom, textura_sofa_marrom
     global verticeInicial_sofa_torto, quantosVertices_sofa_torto, textura_sofa_torto
+    global verticeInicial_chao, quantosVertices_chao, textura_chao
+    global verticeInicial_arvore, quantosVertices_arvore, textura_arvore
 
     verticeInicial_abobora, quantosVertices_abobora, textura_abobora = load_obj_and_texture('objetos/abobora/abobora.obj', ['objetos/abobora/abobora.png'])
 
@@ -49,6 +53,11 @@ def load_objetos():
     verticeInicial_sofa_marrom, quantosVertices_sofa_marrom, textura_sofa_marrom = load_obj_and_texture('objetos/sofa_marrom/sofa_marrom.obj', ['objetos/sofa_marrom/sofa_marrom.jpg'])
 
     verticeInicial_sofa_torto, quantosVertices_sofa_torto, textura_sofa_torto = load_obj_and_texture('objetos/sofa_torto/sofa_torto.obj', ['objetos/sofa_torto/sofa_torto.jpg'])
+
+    ## objetos do ambiente
+    verticeInicial_chao, quantosVertices_chao, textura_chao = load_obj_and_texture('objetos/ambiente/chao/chao.obj', ['objetos/ambiente/chao/chao.jpg'])
+
+    verticeInicial_arvore, quantosVertices_arvore, textura_arvore = load_obj_and_texture('objetos/ambiente/arvores/arvore.obj', ['objetos/ambiente/arvores/arvore.png'])
 
 
 def desenha_opacos(program, desenha):
@@ -163,6 +172,27 @@ def desenha_opacos(program, desenha):
                     75, 0, 0, #translação (x, y, z)
                     0.5, 0.5, 0.5, #escala (x, y, z)
                     textura_sofa_torto[0])   
+        
+        ## para ambiente
+        desenha_objeto(program, verticeInicial_chao, quantosVertices_chao,
+                    0, #angulo
+                    0, 1, 0, #eixo de rotação (x, y, z)
+                    0, -5, 0, #translação (x, y, z)
+                    2, 2, 2, #escala (x, y, z)
+                    textura_chao[0])
+        
+
+
+def desenha_arvores(program, desenha, posicoes_arvores):
+    if desenha:
+        for pos in posicoes_arvores:
+            x, z = pos
+            desenha_objeto(program, verticeInicial_arvore, quantosVertices_arvore,
+                    0, #angulo
+                    0, 1, 0, #eixo de rotação (x, y, z)
+                    x, -5, z, #translação (x, y, z)
+                    0.5, 0.5, 0.5, #escala (x, y, z)
+                    textura_arvore[0])
     
 def desenha_transparentes(program, desenha):
     if desenha:
@@ -172,3 +202,8 @@ def desenha_transparentes(program, desenha):
                     45, 0, 0, #translação (x, y, z)
                     0.5, 0.5, 0.5, #escala (x, y, z)
                     textura_fantasma_puido[0])
+        
+        
+        
+        
+        

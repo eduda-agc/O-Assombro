@@ -18,6 +18,9 @@ from transformacoes_mat.transforms import *
 
 ALTURA = 700
 LARGURA = 700   
+TAM_CHAO = 60 
+MARGEM = 2 #margem para não desenhar objetos muito próximos do limite do chão
+QTD_ARVORES = 30
 
 window = create_window(LARGURA, ALTURA)
 
@@ -54,10 +57,19 @@ init_camera(LARGURA, ALTURA)
 glfw.show_window(window)
 
 glEnable(GL_DEPTH_TEST) ### importante para 3D
-polygonal_mode = False 
+polygonal_mode = False ## não esquecer de programar para ativar isso quando quise
 glUniform1i(glGetUniformLocation(program, "imagem"), 0)
 glEnable(GL_BLEND)
 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+
+#definir posições das árvores
+posicoes_arvores = []
+
+for _ in range(QTD_ARVORES):  
+    x = random.uniform(-TAM_CHAO + MARGEM, TAM_CHAO - MARGEM)
+    z = random.uniform(-TAM_CHAO + MARGEM, TAM_CHAO - MARGEM)
+
+    posicoes_arvores.append((x, z))
 
 while not glfw.window_should_close(window):
 
@@ -69,7 +81,7 @@ while not glfw.window_should_close(window):
        
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     
-    glClearColor(1.0, 1.0, 1.0, 1.0)
+    glClearColor(0.0, 0.0, 0.1, 1.0) #cor do ceu
     
     if polygonal_mode:
         glPolygonMode(GL_FRONT_AND_BACK,GL_LINE)
@@ -78,13 +90,17 @@ while not glfw.window_should_close(window):
 
     glActiveTexture(GL_TEXTURE0)
 
-    desenha_opacos(program, True)
+    desenha_opacos(program, True) 
+    desenha_arvores(program, True, posicoes_arvores)
     desenha_transparentes(program, True)
-    
+
+    #mat = transformacoes();
 
     mat_view = view()
     loc_view = glGetUniformLocation(program, "view")
     glUniformMatrix4fv(loc_view, 1, GL_TRUE, mat_view)
+
+    #mat_projection = perspective(45, LARGURA/LARGURA, 0.1, 100) #perspectiva
 
     mat_projection = projection(ALTURA, LARGURA)
     loc_projection = glGetUniformLocation(program, "projection")
