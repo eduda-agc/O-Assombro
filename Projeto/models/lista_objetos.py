@@ -51,7 +51,7 @@ def load_objetos():
     verticeInicial_sofa_torto, quantosVertices_sofa_torto, textura_sofa_torto = load_obj_and_texture('objetos/sofa_torto/sofa_torto.obj', ['objetos/sofa_torto/sofa_torto.jpg'])
 
 
-def desenha_objetos(program, desenha):
+def desenha_opacos(program, desenha):
     if desenha:
         desenha_objeto(program, verticeInicial_abobora, quantosVertices_abobora,
                        0, #angulo
@@ -122,13 +122,6 @@ def desenha_objetos(program, desenha):
                     0.05, 0.05, 0.05, #escala (x, y, z)
                     textura_casa_simples[0])
         
-        desenha_objeto(program, verticeInicial_fantasma_puido, quantosVertices_fantasma_puido,
-                    0, #angulo
-                    0, 1, 0, #eixo de rotação (x, y, z)
-                    45, 0, 0, #translação (x, y, z)
-                    0.5, 0.5, 0.5, #escala (x, y, z)
-                    textura_fantasma_puido[0])
-        
         desenha_objeto(program, verticeInicial_lanterna, quantosVertices_lanterna,
                     0, #angulo
                     0, 1, 0, #eixo de rotação (x, y, z)
@@ -160,7 +153,7 @@ def desenha_objetos(program, desenha):
         desenha_objeto(program, verticeInicial_sofa_marrom, quantosVertices_sofa_marrom,
                     0, #angulo
                     0, 1, 0, #eixo de rotação (x, y, z)
-                    70, 0, 0, #translação (x, y, z)
+                    46, 0, 0, #translação (x, y, z)
                     0.5, 0.5, 0.5, #escala (x, y, z)
                     textura_sofa_marrom[0])
         
@@ -171,6 +164,11 @@ def desenha_objetos(program, desenha):
                     0.5, 0.5, 0.5, #escala (x, y, z)
                     textura_sofa_torto[0])   
     
-def desenha_ambiente(program, desenha):
+def desenha_transparentes(program, desenha):
     if desenha:
-        print("a")
+        desenha_objeto(program, verticeInicial_fantasma_puido, quantosVertices_fantasma_puido,
+                    0, #angulo
+                    0, 1, 0, #eixo de rotação (x, y, z)
+                    45, 0, 0, #translação (x, y, z)
+                    0.5, 0.5, 0.5, #escala (x, y, z)
+                    textura_fantasma_puido[0])

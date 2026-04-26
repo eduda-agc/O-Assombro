@@ -66,7 +66,7 @@ def circular_sliding_window_of_three(arr):
 
 
 def load_texture_from_file(img_textura):
-    texture_id = glGenTextures(1)  # 🔥 cria textura real
+    texture_id = glGenTextures(1) 
     glBindTexture(GL_TEXTURE_2D, texture_id)
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
@@ -74,18 +74,18 @@ def load_texture_from_file(img_textura):
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
 
-    img = Image.open(img_textura)
+    img = Image.open(img_textura).convert("RGBA")
     img_width, img_height = img.size
-    image_data = img.tobytes("raw", "RGB", 0, -1)
+    image_data = img.tobytes("raw", "RGBA", 0, -1)
 
     glTexImage2D(
         GL_TEXTURE_2D,
         0,
-        GL_RGB,
+        GL_RGBA,
         img_width,
         img_height,
         0,
-        GL_RGB,
+        GL_RGBA,
         GL_UNSIGNED_BYTE,
         image_data
     )

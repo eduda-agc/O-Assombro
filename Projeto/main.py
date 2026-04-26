@@ -56,6 +56,8 @@ glfw.show_window(window)
 glEnable(GL_DEPTH_TEST) ### importante para 3D
 polygonal_mode = False 
 glUniform1i(glGetUniformLocation(program, "imagem"), 0)
+glEnable(GL_BLEND)
+glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
 while not glfw.window_should_close(window):
 
@@ -76,8 +78,9 @@ while not glfw.window_should_close(window):
 
     glActiveTexture(GL_TEXTURE0)
 
-    desenha_ambiente(program, False)
-    desenha_objetos(program, True)
+    desenha_opacos(program, True)
+    desenha_transparentes(program, True)
+    
 
     mat_view = view()
     loc_view = glGetUniformLocation(program, "view")

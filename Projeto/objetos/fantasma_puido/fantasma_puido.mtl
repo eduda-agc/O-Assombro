@@ -1,4 +1,4 @@
-# Blender 5.1.1 MTL File: 'None'
+# Blender 5.1.1 MTL File: 'Sem título.blend'
 # www.blender.org
 
 newmtl Ghost
@@ -8,8 +8,8 @@ Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 illum 1
-map_Kd fantasma.png
-map_d fantasma.png
+map_Kd textura unificada.png
+map_d textura unificada.png
 
 newmtl Web
 Ns 0.000000
@@ -18,5 +18,5 @@ Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 illum 1
-map_Kd detalhes.png
-map_d detalhes.png
+map_Kd textura unificada.png
+map_d textura unificada.png
