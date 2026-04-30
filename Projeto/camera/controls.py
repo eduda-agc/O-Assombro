@@ -2,6 +2,7 @@ import glfw
 from OpenGL.GL import *
 import glm
 import math 
+import models.lista_objetos as objs
 
 # camera control variables
 #cameraPos   = glm.vec3(0.0,  0.0,  1.0);
@@ -9,8 +10,8 @@ import math
 #cameraUp    = glm.vec3(0.0,  1.0,  0.0);
 
 # camera
-cameraPos   = glm.vec3(0.0, 0.0, 3.0)
-cameraFront = glm.vec3(0.0, 0.0, -1.0)
+cameraPos   = glm.vec3(15.0, -2.5, 9)
+cameraFront = glm.vec3(0.0, 0.0, 1.0)
 cameraUp    = glm.vec3(0.0, 1.0, 0.0)
 
 # "head bob"
@@ -28,6 +29,8 @@ yaw   = -90.0	# yaw is initialized to -90.0 degrees since a yaw of 0.0 results i
 pitch =  0.0
 lastX = 0
 lastY = 0
+
+polygonal_mode = False
 
 def init_camera(largura, altura):
     global lastX, lastY
@@ -55,27 +58,107 @@ def key_event(window, key, scancode, action, mods):
     if key == glfw.KEY_H and action == glfw.PRESS:
         headbob_enabled = not headbob_enabled
 
-    cameraSpeed = 9 * deltaTime
+    cameraSpeed = 15 * deltaTime
 
+    LIMITE = 30  
+
+    cameraSpeed = 15 * deltaTime
+
+   # -------- FRENTE --------
     if key == glfw.KEY_W:
         move_forward = (action == glfw.PRESS or action == glfw.REPEAT)
         if move_forward:
-            cameraPos += cameraSpeed * cameraFront
+            direcao = glm.vec3(cameraFront.x, 0.0, cameraFront.z)
 
+            # evita bug se olhar totalmente pra cima/baixo
+            if glm.length(direcao) > 0:
+                direcao = glm.normalize(direcao)
+
+            nova_pos = cameraPos + direcao * cameraSpeed
+
+            if -LIMITE <= nova_pos.x <= LIMITE and -LIMITE <= nova_pos.z <= LIMITE:
+                cameraPos = nova_pos
+
+    # -------- TRÁS --------
     if key == glfw.KEY_S:
         move_backward = (action == glfw.PRESS or action == glfw.REPEAT)
         if move_backward:
-            cameraPos -= cameraSpeed * cameraFront
+            direcao = glm.vec3(cameraFront.x, 0.0, cameraFront.z)
 
+            if glm.length(direcao) > 0:
+                direcao = glm.normalize(direcao)
+
+            nova_pos = cameraPos - direcao * cameraSpeed
+
+            if -LIMITE <= nova_pos.x <= LIMITE and -LIMITE <= nova_pos.z <= LIMITE:
+                cameraPos = nova_pos
+
+    # -------- ESQUERDA --------
     if key == glfw.KEY_A:
         move_left = (action == glfw.PRESS or action == glfw.REPEAT)
         if move_left:
-            cameraPos -= glm.normalize(glm.cross(cameraFront, cameraUp)) * cameraSpeed
+            direita = glm.normalize(glm.cross(cameraFront, cameraUp))
+            nova_pos = cameraPos - direita * cameraSpeed
 
+            if -LIMITE <= nova_pos.x <= LIMITE and -LIMITE <= nova_pos.z <= LIMITE:
+                cameraPos = nova_pos
+
+    # -------- DIREITA --------
     if key == glfw.KEY_D:
         move_right = (action == glfw.PRESS or action == glfw.REPEAT)
         if move_right:
-            cameraPos += glm.normalize(glm.cross(cameraFront, cameraUp)) * cameraSpeed
+            direita = glm.normalize(glm.cross(cameraFront, cameraUp))
+            nova_pos = cameraPos + direita * cameraSpeed
+
+            if -LIMITE <= nova_pos.x <= LIMITE and -LIMITE <= nova_pos.z <= LIMITE:
+                cameraPos = nova_pos
+
+    if key == glfw.KEY_UP and (action == glfw.PRESS or action == glfw.REPEAT):
+        if cameraPos.y < 10:  # limite superior
+            cameraPos.y += cameraSpeed
+
+    if key == glfw.KEY_DOWN and (action == glfw.PRESS or action == glfw.REPEAT):
+        if cameraPos.y > -5:  # limite inferior
+            cameraPos.y -= cameraSpeed
+
+    if key == glfw.KEY_LEFT and (action == glfw.PRESS or action == glfw.REPEAT):
+         objs.carro_pos[2] += 0.1  # move para trás
+
+    if key == glfw.KEY_RIGHT and (action == glfw.PRESS or action == glfw.REPEAT):
+         objs.carro_pos[2] -= 0.1  # move para frente     
+         
+    if key == glfw.KEY_T:
+            objs.cadeira1_pos[0] += 0.05  # move no eixo X
+
+    if key == glfw.KEY_G:
+            objs.cadeira1_pos[0] -= 0.05
+
+        # ---- ROTACAO (cadeira 2) ----
+    if key == glfw.KEY_R:
+            objs.cadeira2_rot += 5  # gira
+
+    if key == glfw.KEY_F:
+            objs.cadeira2_rot -= 5
+
+    if key == glfw.KEY_Y:
+            objs.mesa_posicao[1] += 0.05  # sobe
+
+    if key == glfw.KEY_H:
+            objs.mesa_posicao[1] -= 0.05  # desce
+    
+    if key == glfw.KEY_U:
+            objs.fantasma_scale += 0.05  # aumenta a escala
+
+    if key == glfw.KEY_J:
+            objs.fantasma_scale -= 0.05  # diminui a escala
+    
+    if key == glfw.KEY_I:
+            objs.abobora_angle += 3  # aumenta a escala
+
+    if key == glfw.KEY_K:
+            objs.abobora_angle -= 3  # diminui a escala
+
+            
 
     if action == glfw.RELEASE:
         if key == glfw.KEY_W:
@@ -86,6 +169,7 @@ def key_event(window, key, scancode, action, mods):
             move_left = False
         if key == glfw.KEY_D:
             move_right = False
+    # ---- TRANSLACAO (cadeira 1) ----
         
 
 # glfw: whenever the mouse moves, this callback is called
