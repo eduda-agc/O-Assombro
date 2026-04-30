@@ -143,7 +143,7 @@ def key_event(window, key, scancode, action, mods):
     if key == glfw.KEY_Y:
             objs.mesa_posicao[1] += 0.05  # sobe
 
-    if key == glfw.KEY_H:
+    if key == glfw.KEY_B:
             objs.mesa_posicao[1] -= 0.05  # desce
     
     if key == glfw.KEY_U:
