@@ -37,10 +37,10 @@ O-Assombro é um cenário tridimensional composto por ambientes interno e extern
 
 | Funcionalidade              | Status       | Observações                     |
 |----------------------------|-------------|--------------------------------|
-| Movimentação da câmera     | Em breve    |                                |
-| Controles via teclado      | Em breve    |                                |
-| Alternância de malha (wireframe) | Em breve | Tecla 'P'                      |
-| Transformações (escala, rotação, translação) | Em breve | Controle individual por modelo |
+| Movimentação da câmera     | Implementado   |  Desabilitar simulação de caminhada com 'H'|
+| Controles via teclado      | Implementado    |                                |
+| Alternância de malha (wireframe) | Implementado | Tecla 'P'                      |
+| Transformações (escala, rotação, translação) | Implementado | Controle individual por modelo |
 
 ---
 
@@ -48,7 +48,15 @@ O-Assombro é um cenário tridimensional composto por ambientes interno e extern
 
 | Ação                  | Tecla        |
 |----------------------|-------------|
-| (a definir)          | (a definir) |
+| Caminhar pela cena          | A W S D |
+| Movimento vertical câmera | Setas cima / baixo |
+| Translação carro | Setas esqueda / direita |
+| Rotação da abóbora | I / K |
+| Rotação cadeira | R / F |
+| Translação cadeira | T / G |
+| Translação mesa | Y / B |
+| Escala fantasma | U / J |
+| Escala e translação menina | Jumpscare! |
 
 ---
 
