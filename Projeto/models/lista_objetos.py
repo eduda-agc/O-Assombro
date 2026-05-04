@@ -2,86 +2,6 @@ from models.objetos import desenha_objeto, load_obj_and_texture
 import random
 import numpy as np
 
-def load_objetos():
-    global verticeInicial_abobora, quantosVertices_abobora, textura_abobora
-    global verticeInicial_cadeiras, quantosVertices_cadeiras, textura_cadeiras  
-    global verticeInicial_camaVelha, quantosVertices_camaVelha, textura_camaVelha
-    global verticeInicial_capa1, quantosVertices_capa1, textura_capa1
-    global verticeInicial_capa2, quantosVertices_capa2, textura_capa2
-    global verticeInicial_capaArrasta, quantosVertices_capaArrasta, textura_capaArrasta
-    global verticeInicial_carro, quantosVertices_carro, textura_carro
-    global verticeInicial_casa_amarela, quantosVertices_casa_amarela, textura_casa_amarela
-    global verticeInicial_casa_simples, quantosVertices_casa_simples, textura_casa_simples
-    global verticeInicial_fantasma_puido, quantosVertices_fantasma_puido, textura_fantasma_puido
-    global verticeInicial_garota_horror, quantosVertices_garota_horror, textura_garota_horror
-    global verticeInicial_lampada_mao, quantosVertices_lampada_mao, textura_lampada_mao
-    global verticeInicial_lanterna, quantosVertices_lanterna, textura_lanterna
-    global verticeInicial_lua, quantosVertices_lua, textura_lua
-    global verticeInicial_mascara_sinistra, quantosVertices_mascara_sinistra, textura_mascara_sinistra
-    global verticeInicial_mesa_redonda, quantosVertices_mesa_redonda, textura_mesa_redonda
-    global verticeInicial_mesa_retangular, quantosVertices_mesa_retangular, textura_mesa_retangular
-    global verticeInicial_sofa_marrom, quantosVertices_sofa_marrom, textura_sofa_marrom
-    global verticeInicial_sofa_torto, quantosVertices_sofa_torto, textura_sofa_torto
-    global verticeInicial_vela_parede, quantosVertices_vela_parede, textura_vela_parede
-    global verticeInicial_vela_simples1, quantosVertices_vela_simples1, textura_vela_simples1
-    global verticeInicial_vela_simples2, quantosVertices_vela_simples2, textura_vela_simples2
-    global verticeInicial_vela_simples3, quantosVertices_vela_simples3, textura_vela_simples3
-
-    #ambiente
-    global verticeInicial_chao, quantosVertices_chao, textura_chao
-    global verticeInicial_arvore, quantosVertices_arvore, textura_arvore
-
-    verticeInicial_abobora, quantosVertices_abobora, textura_abobora = load_obj_and_texture('objetos/abobora/abobora.obj', ['objetos/abobora/abobora.png'])
-
-    verticeInicial_cadeiras, quantosVertices_cadeiras, textura_cadeiras = load_obj_and_texture('objetos/cadeiras/cadeira.obj', ['objetos/cadeiras/cadeira.png'])
-
-    verticeInicial_camaVelha, quantosVertices_camaVelha, textura_camaVelha = load_obj_and_texture('objetos/cama_velha/cama_velha.obj', ['objetos/cama_velha/cama_velha.png'])
-
-    verticeInicial_capa1, quantosVertices_capa1, textura_capa1 = load_obj_and_texture('objetos/capas/capa1.obj', ['objetos/capas/textura_capas.png'])
-
-    verticeInicial_capa2, quantosVertices_capa2, textura_capa2 = load_obj_and_texture('objetos/capas/capa2.obj', ['objetos/capas/textura_capas.png'])
-
-    verticeInicial_capaArrasta, quantosVertices_capaArrasta, textura_capaArrasta = load_obj_and_texture('objetos/capas/capa_arrasta.obj', ['objetos/capas/textura_capas.png'])
-
-    verticeInicial_carro, quantosVertices_carro, textura_carro = load_obj_and_texture('objetos/carro/carro.obj', ['objetos/carro/carro.png'])
-
-    verticeInicial_casa_amarela, quantosVertices_casa_amarela, textura_casa_amarela = load_obj_and_texture('objetos/casa_amarela/casa_amarela.obj', ['objetos/casa_amarela/casa_amarela.png'])
-
-    verticeInicial_casa_simples, quantosVertices_casa_simples, textura_casa_simples = load_obj_and_texture('objetos/casa_simples/casa.obj', ['objetos/casa_simples/casa.png'])
-
-    verticeInicial_fantasma_puido, quantosVertices_fantasma_puido, textura_fantasma_puido = load_obj_and_texture('objetos/fantasma_puido/fantasma_puido.obj', ['objetos/fantasma_puido/textura_unificada.png'])
-
-    verticeInicial_garota_horror, quantosVertices_garota_horror, textura_garota_horror = load_obj_and_texture('objetos/garota_horror/garota_horror.obj', ['objetos/garota_horror/textura_unificada.png'])
-    
-    verticeInicial_lampada_mao, quantosVertices_lampada_mao, textura_lampada_mao  = load_obj_and_texture('objetos/lampada_mao/lampada_mao.obj', ['objetos/lampada_mao/lampada_mao.png'])
-
-    verticeInicial_lanterna, quantosVertices_lanterna, textura_lanterna = load_obj_and_texture('objetos/lanterna/lanterna.obj', ['objetos/lanterna/lanterna.jpg'])
-
-    verticeInicial_lua, quantosVertices_lua, textura_lua = load_obj_and_texture('objetos/lua/lua.obj', ['objetos/lua/lua.png'])
-
-    verticeInicial_mascara_sinistra, quantosVertices_mascara_sinistra, textura_mascara_sinistra = load_obj_and_texture('objetos/mascara_sinistra/mascara_sinistra.obj', ['objetos/mascara_sinistra/mascara_sinistra.jpg'])
-
-    verticeInicial_mesa_redonda, quantosVertices_mesa_redonda, textura_mesa_redonda = load_obj_and_texture('objetos/mesa_redonda/mesa_redonda.obj', ['objetos/mesa_redonda/mesa_redonda.png'])
-
-    verticeInicial_mesa_retangular, quantosVertices_mesa_retangular, textura_mesa_retangular = load_obj_and_texture('objetos/mesa_retangular/mesa_retangular.obj', ['objetos/mesa_retangular/mesa_retangular.png'])
-
-    verticeInicial_sofa_marrom, quantosVertices_sofa_marrom, textura_sofa_marrom = load_obj_and_texture('objetos/sofa_marrom/sofa_marrom.obj', ['objetos/sofa_marrom/sofa_marrom.jpg'])
-
-    verticeInicial_sofa_torto, quantosVertices_sofa_torto, textura_sofa_torto = load_obj_and_texture('objetos/sofa_torto/sofa_torto.obj', ['objetos/sofa_torto/sofa_torto.jpg'])
-
-    verticeInicial_vela_parede, quantosVertices_vela_parede, textura_vela_parede = load_obj_and_texture('objetos/vela_parede/vela_parede.obj', ['objetos/vela_parede/textura_unificada.png'])
-
-    verticeInicial_vela_simples1, quantosVertices_vela_simples1, textura_vela_simples1 = load_obj_and_texture('objetos/velas_simples/vela1.obj', ['objetos/velas_simples/vela1.png'])
-
-    verticeInicial_vela_simples2, quantosVertices_vela_simples2, textura_vela_simples2 = load_obj_and_texture('objetos/velas_simples/vela2.obj', ['objetos/velas_simples/vela2.png'])
-
-    verticeInicial_vela_simples3, quantosVertices_vela_simples3, textura_vela_simples3 = load_obj_and_texture('objetos/velas_simples/vela3.obj', ['objetos/velas_simples/vela3.png'])
-
-    ## objetos do ambiente
-    verticeInicial_chao, quantosVertices_chao, textura_chao = load_obj_and_texture('objetos/ambiente/chao/chao.obj', ['objetos/ambiente/chao/chao.jpg'])
-
-    verticeInicial_arvore, quantosVertices_arvore, textura_arvore = load_obj_and_texture('objetos/ambiente/arvores/arvore.obj', ['objetos/ambiente/arvores/arvore.png'])
-
 # cadeira 1 → translação
 cadeira1_pos = [16, -4.5, -5]
 
@@ -263,6 +183,13 @@ def desenha_opacos(program, desenha):
                     2, 2, 2, #escala (x, y, z)
                     textura_chao[0])
         
+        desenha_objeto(program, verticeInicial_ceu, quantosVertices_ceu,
+                    0, #angulo
+                    0, 0, 0, #eixo de rotação (x, y, z)
+                    0, 0, 0, #translação (x, y, z)
+                    45, 45, 45, #escala (x, y, z)
+                    textura_ceu[0])
+        
 
 
 def desenha_arvores(program, desenha, posicoes_arvores):
@@ -319,6 +246,89 @@ def desenha_item_mao(program, verticeInicial, quantosVertices, textura):
         textura
     )
         
-        
+def load_objetos():
+    global verticeInicial_abobora, quantosVertices_abobora, textura_abobora
+    global verticeInicial_cadeiras, quantosVertices_cadeiras, textura_cadeiras  
+    global verticeInicial_camaVelha, quantosVertices_camaVelha, textura_camaVelha
+    global verticeInicial_capa1, quantosVertices_capa1, textura_capa1
+    global verticeInicial_capa2, quantosVertices_capa2, textura_capa2
+    global verticeInicial_capaArrasta, quantosVertices_capaArrasta, textura_capaArrasta
+    global verticeInicial_carro, quantosVertices_carro, textura_carro
+    global verticeInicial_casa_amarela, quantosVertices_casa_amarela, textura_casa_amarela
+    global verticeInicial_casa_simples, quantosVertices_casa_simples, textura_casa_simples
+    global verticeInicial_fantasma_puido, quantosVertices_fantasma_puido, textura_fantasma_puido
+    global verticeInicial_garota_horror, quantosVertices_garota_horror, textura_garota_horror
+    global verticeInicial_lampada_mao, quantosVertices_lampada_mao, textura_lampada_mao
+    global verticeInicial_lanterna, quantosVertices_lanterna, textura_lanterna
+    global verticeInicial_lua, quantosVertices_lua, textura_lua
+    global verticeInicial_mascara_sinistra, quantosVertices_mascara_sinistra, textura_mascara_sinistra
+    global verticeInicial_mesa_redonda, quantosVertices_mesa_redonda, textura_mesa_redonda
+    global verticeInicial_mesa_retangular, quantosVertices_mesa_retangular, textura_mesa_retangular
+    global verticeInicial_sofa_marrom, quantosVertices_sofa_marrom, textura_sofa_marrom
+    global verticeInicial_sofa_torto, quantosVertices_sofa_torto, textura_sofa_torto
+    global verticeInicial_vela_parede, quantosVertices_vela_parede, textura_vela_parede
+    global verticeInicial_vela_simples1, quantosVertices_vela_simples1, textura_vela_simples1
+    global verticeInicial_vela_simples2, quantosVertices_vela_simples2, textura_vela_simples2
+    global verticeInicial_vela_simples3, quantosVertices_vela_simples3, textura_vela_simples3
+    global verticeInicial_chao, quantosVertices_chao, textura_chao
+    
+
+    #ambiente
+    global verticeInicial_chao, quantosVertices_chao, textura_chao
+    global verticeInicial_arvore, quantosVertices_arvore, textura_arvore
+    global verticeInicial_ceu, quantosVertices_ceu, textura_ceu
+
+    verticeInicial_abobora, quantosVertices_abobora, textura_abobora = load_obj_and_texture('objetos/abobora/abobora.obj', ['objetos/abobora/abobora.png'])
+
+    verticeInicial_cadeiras, quantosVertices_cadeiras, textura_cadeiras = load_obj_and_texture('objetos/cadeiras/cadeira.obj', ['objetos/cadeiras/cadeira.png'])
+
+    verticeInicial_camaVelha, quantosVertices_camaVelha, textura_camaVelha = load_obj_and_texture('objetos/cama_velha/cama_velha.obj', ['objetos/cama_velha/cama_velha.png'])
+
+    verticeInicial_capa1, quantosVertices_capa1, textura_capa1 = load_obj_and_texture('objetos/capas/capa1.obj', ['objetos/capas/textura_capas.png'])
+
+    verticeInicial_capa2, quantosVertices_capa2, textura_capa2 = load_obj_and_texture('objetos/capas/capa2.obj', ['objetos/capas/textura_capas.png'])
+
+    verticeInicial_capaArrasta, quantosVertices_capaArrasta, textura_capaArrasta = load_obj_and_texture('objetos/capas/capa_arrasta.obj', ['objetos/capas/textura_capas.png'])
+
+    verticeInicial_carro, quantosVertices_carro, textura_carro = load_obj_and_texture('objetos/carro/carro.obj', ['objetos/carro/carro.png'])
+
+    verticeInicial_casa_amarela, quantosVertices_casa_amarela, textura_casa_amarela = load_obj_and_texture('objetos/casa_amarela/casa_amarela.obj', ['objetos/casa_amarela/casa_amarela.png'])
+
+    verticeInicial_casa_simples, quantosVertices_casa_simples, textura_casa_simples = load_obj_and_texture('objetos/casa_simples/casa.obj', ['objetos/casa_simples/casa.png'])
+
+    verticeInicial_fantasma_puido, quantosVertices_fantasma_puido, textura_fantasma_puido = load_obj_and_texture('objetos/fantasma_puido/fantasma_puido.obj', ['objetos/fantasma_puido/textura_unificada.png'])
+
+    verticeInicial_garota_horror, quantosVertices_garota_horror, textura_garota_horror = load_obj_and_texture('objetos/garota_horror/garota_horror.obj', ['objetos/garota_horror/textura_unificada.png'])
+    
+    verticeInicial_lampada_mao, quantosVertices_lampada_mao, textura_lampada_mao  = load_obj_and_texture('objetos/lampada_mao/lampada_mao.obj', ['objetos/lampada_mao/lampada_mao.png'])
+
+    verticeInicial_lanterna, quantosVertices_lanterna, textura_lanterna = load_obj_and_texture('objetos/lanterna/lanterna.obj', ['objetos/lanterna/lanterna.jpg'])
+
+    verticeInicial_lua, quantosVertices_lua, textura_lua = load_obj_and_texture('objetos/lua/lua.obj', ['objetos/lua/lua.png'])
+
+    verticeInicial_mascara_sinistra, quantosVertices_mascara_sinistra, textura_mascara_sinistra = load_obj_and_texture('objetos/mascara_sinistra/mascara_sinistra.obj', ['objetos/mascara_sinistra/mascara_sinistra.jpg'])
+
+    verticeInicial_mesa_redonda, quantosVertices_mesa_redonda, textura_mesa_redonda = load_obj_and_texture('objetos/mesa_redonda/mesa_redonda.obj', ['objetos/mesa_redonda/mesa_redonda.png'])
+
+    verticeInicial_mesa_retangular, quantosVertices_mesa_retangular, textura_mesa_retangular = load_obj_and_texture('objetos/mesa_retangular/mesa_retangular.obj', ['objetos/mesa_retangular/mesa_retangular.png'])
+
+    verticeInicial_sofa_marrom, quantosVertices_sofa_marrom, textura_sofa_marrom = load_obj_and_texture('objetos/sofa_marrom/sofa_marrom.obj', ['objetos/sofa_marrom/sofa_marrom.jpg'])
+
+    verticeInicial_sofa_torto, quantosVertices_sofa_torto, textura_sofa_torto = load_obj_and_texture('objetos/sofa_torto/sofa_torto.obj', ['objetos/sofa_torto/sofa_torto.jpg'])
+
+    verticeInicial_vela_parede, quantosVertices_vela_parede, textura_vela_parede = load_obj_and_texture('objetos/vela_parede/vela_parede.obj', ['objetos/vela_parede/textura_unificada.png'])
+
+    verticeInicial_vela_simples1, quantosVertices_vela_simples1, textura_vela_simples1 = load_obj_and_texture('objetos/velas_simples/vela1.obj', ['objetos/velas_simples/vela1.png'])
+
+    verticeInicial_vela_simples2, quantosVertices_vela_simples2, textura_vela_simples2 = load_obj_and_texture('objetos/velas_simples/vela2.obj', ['objetos/velas_simples/vela2.png'])
+
+    verticeInicial_vela_simples3, quantosVertices_vela_simples3, textura_vela_simples3 = load_obj_and_texture('objetos/velas_simples/vela3.obj', ['objetos/velas_simples/vela3.png'])
+
+    ## objetos do ambiente
+    verticeInicial_chao, quantosVertices_chao, textura_chao = load_obj_and_texture('objetos/ambiente/chao/chao.obj', ['objetos/ambiente/chao/chao.jpg'])
+
+    verticeInicial_arvore, quantosVertices_arvore, textura_arvore = load_obj_and_texture('objetos/ambiente/arvores/arvore.obj', ['objetos/ambiente/arvores/arvore.png'])
+
+    verticeInicial_ceu, quantosVertices_ceu, textura_ceu = load_obj_and_texture('objetos/ambiente/ceu/ceu.obj', ['objetos/ambiente/ceu/ceu3.png'])       
         
         

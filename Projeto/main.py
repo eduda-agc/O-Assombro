@@ -20,16 +20,14 @@ from transformacoes_mat.transforms import *
 ALTURA = 700
 LARGURA = 700   
 TAM_CHAO = 40 
-MARGEM = 2 #margem para não desenhar objetos muito próximos do limite do chão
-QTD_ARVORES = 20
-
+MARGEM = 10 #margem para não desenhar objetos muito próximos do limite do chão
+QTD_ARVORES = 100
 
 
 window = create_window(LARGURA, ALTURA)
 
 ourShader = Shader("graficos/shaders/vertex_shader.vs", "graficos/shaders/fragment_shader.fs")
 ourShader.use()
-
 
 
 program = ourShader.getProgram()
@@ -68,10 +66,10 @@ glEnable(GL_BLEND)
 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
 
-CASA_X_MIN = 5
-CASA_X_MAX = 20
-CASA_Z_MIN = 3
-CASA_Z_MAX = -20
+CASA_X_MIN = 10
+CASA_X_MAX = 21
+CASA_Z_MIN = -13
+CASA_Z_MAX = 0
 
 def dentro_da_casa(x, z):
     return ((CASA_X_MIN <= x <= CASA_X_MAX) and
@@ -86,9 +84,14 @@ while len(posicoes_arvores) < QTD_ARVORES:
     x = random.uniform(-TAM_CHAO + MARGEM, TAM_CHAO - MARGEM)
     z = random.uniform(-TAM_CHAO + MARGEM, TAM_CHAO - MARGEM)
 
+    if (CASA_X_MIN - MARGEM <= x <= CASA_X_MAX + MARGEM) and (CASA_Z_MIN - MARGEM <= z <= CASA_Z_MAX + MARGEM):
+        continue  # posição muito próxima da casa, gerar outra  
+
     if not dentro_da_casa(x, z):
         print(f"Adicionando árvore na posição ({x:.2f}, {z:.2f})")
         posicoes_arvores.append((x, z))
+
+print(len(posicoes_arvores))
 
 
 jumpscare_ativo = False
@@ -110,7 +113,7 @@ while not glfw.window_should_close(window):
        
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     
-    glClearColor(0.0, 0.0, 0.1, 1.0) #cor do ceu
+    glClearColor(1.0, 1.0, 1.0, 1.0) #cor do ceu
     
     if controls.polygonal_mode:
         glPolygonMode(GL_FRONT_AND_BACK,GL_LINE)
@@ -160,13 +163,9 @@ while not glfw.window_should_close(window):
     objs.desenha_arvores(program, True, posicoes_arvores)
     objs.desenha_transparentes(program, True)
 
-    #mat = transformacoes();
-
     mat_view = view()
     loc_view = glGetUniformLocation(program, "view")
     glUniformMatrix4fv(loc_view, 1, GL_TRUE, mat_view)
-
-    
 
     mat_projection = projection(ALTURA, LARGURA)
     loc_projection = glGetUniformLocation(program, "projection")
