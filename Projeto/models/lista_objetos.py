@@ -329,6 +329,6 @@ def load_objetos():
 
     verticeInicial_arvore, quantosVertices_arvore, textura_arvore = load_obj_and_texture('objetos/ambiente/arvores/arvore.obj', ['objetos/ambiente/arvores/arvore.png'])
 
-    verticeInicial_ceu, quantosVertices_ceu, textura_ceu = load_obj_and_texture('objetos/ambiente/ceu/ceu.obj', ['objetos/ambiente/ceu/ceu3.png'])       
+    verticeInicial_ceu, quantosVertices_ceu, textura_ceu = load_obj_and_texture('objetos/ambiente/ceu/ceu.obj', ['objetos/ambiente/ceu/ceu.png'])       
         
         
