@@ -470,6 +470,42 @@ while not glfw.window_should_close(window):
     # CORES
     ########################################################
 
+    cor_lanterna = (
+        1.0 * controls.lanterna_mao_intensidade,
+        0.95 * controls.lanterna_mao_intensidade,
+        0.85 * controls.lanterna_mao_intensidade
+    ) if controls.lanterna_mao_ligada else (
+        0.0,
+        0.0,
+        0.0
+    )
+
+    cor_farois = (
+        1.0,
+        1.0,
+        0.9
+    ) if controls.farois_carro_ligados else (
+        0.0,
+        0.0,
+        0.0
+    )
+
+    cor_velas_ligadas = (
+        1.0,
+        1.0,
+        1.0
+    ) if controls.velas_luz_branca else (
+        1.0,
+        0.55,
+        0.15
+    )
+
+    cor_velas = cor_velas_ligadas if controls.velas_ligadas else (
+        0.0,
+        0.0,
+        0.0
+    )
+
     glUniform3f(glGetUniformLocation(program, "candleMin"),
     8.0, -6.0, -13.0)
 
@@ -479,25 +515,25 @@ while not glfw.window_should_close(window):
     # lanterna
     glUniform3f(
         glGetUniformLocation(program, "lightColor[0]"),
-        1.0,
-        0.95,
-        0.85
+        cor_lanterna[0],
+        cor_lanterna[1],
+        cor_lanterna[2]
     )
 
     # farol esquerdo
     glUniform3f(
         glGetUniformLocation(program, "lightColor[1]"),
-        1.0,
-        1.0,
-        0.9
+        cor_farois[0],
+        cor_farois[1],
+        cor_farois[2]
     )
 
     # farol direito
     glUniform3f(
         glGetUniformLocation(program, "lightColor[2]"),
-        1.0,
-        1.0,
-        0.9
+        cor_farois[0],
+        cor_farois[1],
+        cor_farois[2]
     )
 
     ########################################################
@@ -508,9 +544,9 @@ while not glfw.window_should_close(window):
 
         glUniform3f(
             glGetUniformLocation(program, f"lightColor[{i + 3}]"),
-            1.0,
-            0.55,
-            0.15
+            cor_velas[0],
+            cor_velas[1],
+            cor_velas[2]
         )
 
     ########################################################

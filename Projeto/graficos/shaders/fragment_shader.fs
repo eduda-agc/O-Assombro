@@ -36,6 +36,7 @@ void main()
 
     vec3 norm = normalize(Normal);
     vec3 totalLighting = vec3(0.0);
+    vec3 emissiveGlow = vec3(0.0);
 
     //////////////////////////////////////////////////////
     // LUZES EXTERNAS (0..2)
@@ -133,7 +134,7 @@ void main()
                 0.20 * sin(time * 8.0 + lightPos[i].x * 12.0 + lightPos[i].z * 9.0);
 
             vec3 candleColor =
-                vec3(1.0, 0.55, 0.25) * flicker;
+                lightColor[i] * flicker;
 
             float intensity = flicker;
 
@@ -141,6 +142,9 @@ void main()
             vec3 diffuse = diff * intensity * attenuation * candleColor;
 
             totalLighting += ambient + diffuse;
+
+            float flameGlow = smoothstep(0.65, 0.0, distance);
+            emissiveGlow += candleColor * flameGlow * 1.8;
         }
     }
 
@@ -150,7 +154,8 @@ void main()
 
     totalLighting = clamp(totalLighting, 0.0, 1.0);
 
-    vec3 result = totalLighting * tex.rgb;
+    vec3 result = totalLighting * tex.rgb + emissiveGlow;
+    result = clamp(result, 0.0, 1.0);
 
     FragColor = vec4(result, tex.a);
 }
