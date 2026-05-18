@@ -278,7 +278,8 @@ def desenha_objeto(
     s_z,
     textureId,
     material_diffuse=1.0,
-    material_specular=0.25
+    material_specular=0.25,
+    receive_candle_light=False
 ):
 
     mat_model = model(
@@ -314,6 +315,11 @@ def desenha_objeto(
     glUniform1f(
         glGetUniformLocation(program, "materialSpecular"),
         material_specular
+    )
+
+    glUniform1i(
+        glGetUniformLocation(program, "receiveCandleLight"),
+        receive_candle_light
     )
 
     glDrawArrays(

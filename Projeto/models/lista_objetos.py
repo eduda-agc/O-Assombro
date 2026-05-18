@@ -8,27 +8,28 @@ import numpy as np
 
 MATERIAL_DEFAULT = {
     "diffuse": 1.0,
-    "specular": 0.25
+    "specular": 0.25,
+    "receive_candles": False
 }
 
 MATERIAIS = {
-    "abobora": {"diffuse": 1.15, "specular": 0.18},
-    "cadeiras": {"diffuse": 0.95, "specular": 0.22},
-    "cama": {"diffuse": 0.90, "specular": 0.12},
-    "carro": {"diffuse": 0.85, "specular": 0.70},
-    "casa": {"diffuse": 0.95, "specular": 0.16},
-    "fantasma": {"diffuse": 0.70, "specular": 0.45},
-    "garota": {"diffuse": 0.80, "specular": 0.20},
-    "lampada_mao": {"diffuse": 0.90, "specular": 0.55},
-    "lua": {"diffuse": 1.10, "specular": 0.05},
-    "mascara": {"diffuse": 0.85, "specular": 0.60},
-    "mesa_redonda": {"diffuse": 0.95, "specular": 0.28},
-    "mesa_retangular": {"diffuse": 0.95, "specular": 0.30},
-    "sofa": {"diffuse": 0.85, "specular": 0.10},
-    "vela": {"diffuse": 1.05, "specular": 0.18},
-    "chao": {"diffuse": 0.90, "specular": 0.08},
-    "arvore": {"diffuse": 0.85, "specular": 0.06},
-    "ceu": {"diffuse": 0.65, "specular": 0.00}
+    "abobora": {"diffuse": 1.15, "specular": 0.18, "receive_candles": False},
+    "cadeiras": {"diffuse": 0.95, "specular": 0.22, "receive_candles": True},
+    "cama": {"diffuse": 0.90, "specular": 0.12, "receive_candles": True},
+    "carro": {"diffuse": 0.85, "specular": 0.70, "receive_candles": False},
+    "casa": {"diffuse": 0.95, "specular": 0.16, "receive_candles": False},
+    "fantasma": {"diffuse": 0.70, "specular": 0.45, "receive_candles": True},
+    "garota": {"diffuse": 0.80, "specular": 0.20, "receive_candles": True},
+    "lampada_mao": {"diffuse": 0.90, "specular": 0.55, "receive_candles": False},
+    "lua": {"diffuse": 1.10, "specular": 0.05, "receive_candles": False},
+    "mascara": {"diffuse": 0.85, "specular": 0.60, "receive_candles": False},
+    "mesa_redonda": {"diffuse": 0.95, "specular": 0.28, "receive_candles": True},
+    "mesa_retangular": {"diffuse": 0.95, "specular": 0.30, "receive_candles": True},
+    "sofa": {"diffuse": 0.85, "specular": 0.10, "receive_candles": True},
+    "vela": {"diffuse": 1.05, "specular": 0.18, "receive_candles": True},
+    "chao": {"diffuse": 0.90, "specular": 0.08, "receive_candles": False},
+    "arvore": {"diffuse": 0.85, "specular": 0.06, "receive_candles": False},
+    "ceu": {"diffuse": 0.65, "specular": 0.00, "receive_candles": False}
 }
 
 materiais_por_vertice = {}
@@ -71,7 +72,8 @@ def desenha_objeto(
         s_z,
         textureId,
         material["diffuse"],
-        material["specular"]
+        material["specular"],
+        material["receive_candles"]
     )
 
 ########################################################

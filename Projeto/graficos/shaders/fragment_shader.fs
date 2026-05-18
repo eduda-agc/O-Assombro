@@ -23,6 +23,7 @@ uniform float globalDiffuseStrength;
 uniform float globalSpecularStrength;
 uniform float materialDiffuse;
 uniform float materialSpecular;
+uniform bool receiveCandleLight;
 
 uniform float time;
 
@@ -142,7 +143,7 @@ void main()
     // VELAS (INTERIOR)
     //////////////////////////////////////////////////////
 
-    if(insideCandleBox)
+    if(receiveCandleLight && insideCandleBox)
     {
         for(int i = 3; i < NUM_LIGHTS; i++)
         {
