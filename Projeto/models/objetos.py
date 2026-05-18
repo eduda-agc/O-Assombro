@@ -276,7 +276,9 @@ def desenha_objeto(
     s_x,
     s_y,
     s_z,
-    textureId
+    textureId,
+    material_diffuse=1.0,
+    material_specular=0.25
 ):
 
     mat_model = model(
@@ -303,6 +305,16 @@ def desenha_objeto(
 
     if textureId != 0:
         glBindTexture(GL_TEXTURE_2D, textureId)
+
+    glUniform1f(
+        glGetUniformLocation(program, "materialDiffuse"),
+        material_diffuse
+    )
+
+    glUniform1f(
+        glGetUniformLocation(program, "materialSpecular"),
+        material_specular
+    )
 
     glDrawArrays(
         GL_TRIANGLES,

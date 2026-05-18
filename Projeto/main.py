@@ -512,6 +512,28 @@ while not glfw.window_should_close(window):
     glUniform3f(glGetUniformLocation(program, "candleMax"),
     21.0, -1.2, -2.3)
 
+    glUniform3f(
+        glGetUniformLocation(program, "viewPos"),
+        controls.cameraPos.x,
+        controls.cameraPos.y,
+        controls.cameraPos.z
+    )
+
+    glUniform1f(
+        glGetUniformLocation(program, "globalAmbientStrength"),
+        controls.luz_ambiente_intensidade
+    )
+
+    glUniform1f(
+        glGetUniformLocation(program, "globalDiffuseStrength"),
+        controls.reflexao_difusa_intensidade
+    )
+
+    glUniform1f(
+        glGetUniformLocation(program, "globalSpecularStrength"),
+        controls.reflexao_especular_intensidade
+    )
+
     # lanterna
     glUniform3f(
         glGetUniformLocation(program, "lightColor[0]"),

@@ -1,6 +1,78 @@
-from models.objetos import desenha_objeto, load_obj_and_texture
+from models.objetos import desenha_objeto as desenha_objeto_base, load_obj_and_texture
 import random
 import numpy as np
+
+########################################################
+# PARAMETROS DE ILUMINACAO DOS OBJETOS
+########################################################
+
+MATERIAL_DEFAULT = {
+    "diffuse": 1.0,
+    "specular": 0.25
+}
+
+MATERIAIS = {
+    "abobora": {"diffuse": 1.15, "specular": 0.18},
+    "cadeiras": {"diffuse": 0.95, "specular": 0.22},
+    "cama": {"diffuse": 0.90, "specular": 0.12},
+    "carro": {"diffuse": 0.85, "specular": 0.70},
+    "casa": {"diffuse": 0.95, "specular": 0.16},
+    "fantasma": {"diffuse": 0.70, "specular": 0.45},
+    "garota": {"diffuse": 0.80, "specular": 0.20},
+    "lampada_mao": {"diffuse": 0.90, "specular": 0.55},
+    "lua": {"diffuse": 1.10, "specular": 0.05},
+    "mascara": {"diffuse": 0.85, "specular": 0.60},
+    "mesa_redonda": {"diffuse": 0.95, "specular": 0.28},
+    "mesa_retangular": {"diffuse": 0.95, "specular": 0.30},
+    "sofa": {"diffuse": 0.85, "specular": 0.10},
+    "vela": {"diffuse": 1.05, "specular": 0.18},
+    "chao": {"diffuse": 0.90, "specular": 0.08},
+    "arvore": {"diffuse": 0.85, "specular": 0.06},
+    "ceu": {"diffuse": 0.65, "specular": 0.00}
+}
+
+materiais_por_vertice = {}
+
+def desenha_objeto(
+    program,
+    verticeInicial,
+    quantosVertices,
+    angle,
+    r_x,
+    r_y,
+    r_z,
+    t_x,
+    t_y,
+    t_z,
+    s_x,
+    s_y,
+    s_z,
+    textureId
+):
+
+    material = materiais_por_vertice.get(
+        verticeInicial,
+        MATERIAL_DEFAULT
+    )
+
+    desenha_objeto_base(
+        program,
+        verticeInicial,
+        quantosVertices,
+        angle,
+        r_x,
+        r_y,
+        r_z,
+        t_x,
+        t_y,
+        t_z,
+        s_x,
+        s_y,
+        s_z,
+        textureId,
+        material["diffuse"],
+        material["specular"]
+    )
 
 ########################################################
 # POSIÇÕES / CONTROLES
@@ -579,3 +651,24 @@ def load_objetos():
         'objetos/ambiente/ceu/ceu.obj',
         ['objetos/ambiente/ceu/ceu.png']
     )
+
+    materiais_por_vertice.clear()
+    materiais_por_vertice.update({
+        verticeInicial_abobora: MATERIAIS["abobora"],
+        verticeInicial_cadeiras: MATERIAIS["cadeiras"],
+        verticeInicial_camaVelha: MATERIAIS["cama"],
+        verticeInicial_carro: MATERIAIS["carro"],
+        verticeInicial_casa_amarela: MATERIAIS["casa"],
+        verticeInicial_fantasma_puido: MATERIAIS["fantasma"],
+        verticeInicial_garota_horror: MATERIAIS["garota"],
+        verticeInicial_lampada_mao: MATERIAIS["lampada_mao"],
+        verticeInicial_lua: MATERIAIS["lua"],
+        verticeInicial_mascara_sinistra: MATERIAIS["mascara"],
+        verticeInicial_mesa_redonda: MATERIAIS["mesa_redonda"],
+        verticeInicial_mesa_retangular: MATERIAIS["mesa_retangular"],
+        verticeInicial_sofa_marrom: MATERIAIS["sofa"],
+        verticeInicial_vela_parede: MATERIAIS["vela"],
+        verticeInicial_chao: MATERIAIS["chao"],
+        verticeInicial_arvore: MATERIAIS["arvore"],
+        verticeInicial_ceu: MATERIAIS["ceu"]
+    })

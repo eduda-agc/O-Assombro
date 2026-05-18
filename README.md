@@ -64,6 +64,9 @@ O-Assombro é um cenário tridimensional composto por ambientes interno e extern
 | Diminuir intensidade da lanterna da mão | 4 |
 | Aumentar intensidade da lanterna da mão | 5 |
 | Alternar luz das velas entre amarela e branca | 6 |
+| Diminuir / aumentar luz ambiente | Z / X |
+| Diminuir / aumentar reflexão difusa | C / V |
+| Diminuir / aumentar reflexão especular | N / M |
 
 ---
 
@@ -76,7 +79,7 @@ O-Assombro é um cenário tridimensional composto por ambientes interno e extern
 - Implementação de navegação por câmera
 - Uso de arquivos `.obj`
 - Renderização com pipeline moderno do OpenGL
-- Sem uso de iluminação
+- Uso de iluminação ambiente, difusa e especular
 
 ---
 

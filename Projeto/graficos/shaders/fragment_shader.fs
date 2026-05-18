@@ -17,6 +17,13 @@ uniform vec3 lightColor[NUM_LIGHTS];
 uniform vec3 candleMin;
 uniform vec3 candleMax;
 
+uniform vec3 viewPos;
+uniform float globalAmbientStrength;
+uniform float globalDiffuseStrength;
+uniform float globalSpecularStrength;
+uniform float materialDiffuse;
+uniform float materialSpecular;
+
 uniform float time;
 
 uniform bool useLighting;
@@ -35,8 +42,16 @@ void main()
     }
 
     vec3 norm = normalize(Normal);
-    vec3 totalLighting = vec3(0.0);
+    vec3 totalLighting = vec3(0.015 * globalAmbientStrength);
     vec3 emissiveGlow = vec3(0.0);
+
+    bool insideCandleBox =
+        FragPos.x >= candleMin.x &&
+        FragPos.x <= candleMax.x &&
+        FragPos.y >= candleMin.y &&
+        FragPos.y <= candleMax.y &&
+        FragPos.z >= candleMin.z &&
+        FragPos.z <= candleMax.z;
 
     //////////////////////////////////////////////////////
     // LUZES EXTERNAS (0..2)
@@ -44,6 +59,9 @@ void main()
 
     for(int i = 0; i < 3; i++)
     {
+        if(insideCandleBox && i > 0)
+            continue;
+
         vec3 lightVector = lightPos[i] - FragPos;
         float distance = length(lightVector);
         vec3 toLight = normalize(lightVector);
@@ -90,27 +108,39 @@ void main()
         float attenuation =
             1.0 / (1.0 + linear * distance + quadratic * distance * distance);
 
-        vec3 ambient = ambientStrength * lightColor[i];
-        vec3 diffuse = diff * intensity * attenuation * lightColor[i];
+        vec3 ambient =
+            ambientStrength * globalAmbientStrength * lightColor[i];
+
+        vec3 diffuse =
+            diff *
+            intensity *
+            attenuation *
+            materialDiffuse *
+            globalDiffuseStrength *
+            lightColor[i];
 
         float beamVisibility = pow(intensity, 3.0);
 
         vec3 beam = beamStrength * beamVisibility * attenuation * lightColor[i];
 
-        totalLighting += ambient + diffuse + beam;
+        vec3 viewDir = normalize(viewPos - FragPos);
+        vec3 reflectDir = reflect(-toLight, norm);
+        float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32.0);
+
+        vec3 specular =
+            spec *
+            intensity *
+            attenuation *
+            materialSpecular *
+            globalSpecularStrength *
+            lightColor[i];
+
+        totalLighting += ambient + diffuse + specular + beam;
     }
 
     //////////////////////////////////////////////////////
     // VELAS (INTERIOR)
     //////////////////////////////////////////////////////
-
-    bool insideCandleBox =
-        FragPos.x >= candleMin.x &&
-        FragPos.x <= candleMax.x &&
-        FragPos.y >= candleMin.y &&
-        FragPos.y <= candleMax.y &&
-        FragPos.z >= candleMin.z &&
-        FragPos.z <= candleMax.z;
 
     if(insideCandleBox)
     {
@@ -138,10 +168,30 @@ void main()
 
             float intensity = flicker;
 
-            vec3 ambient = 0.02 * candleColor;
-            vec3 diffuse = diff * intensity * attenuation * candleColor;
+            vec3 ambient =
+                0.02 * globalAmbientStrength * candleColor;
 
-            totalLighting += ambient + diffuse;
+            vec3 diffuse =
+                diff *
+                intensity *
+                attenuation *
+                materialDiffuse *
+                globalDiffuseStrength *
+                candleColor;
+
+            vec3 viewDir = normalize(viewPos - FragPos);
+            vec3 reflectDir = reflect(-toLight, norm);
+            float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32.0);
+
+            vec3 specular =
+                spec *
+                intensity *
+                attenuation *
+                materialSpecular *
+                globalSpecularStrength *
+                candleColor;
+
+            totalLighting += ambient + diffuse + specular;
 
             float flameGlow = smoothstep(0.65, 0.0, distance);
             emissiveGlow += candleColor * flameGlow * 1.8;

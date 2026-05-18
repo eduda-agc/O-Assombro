@@ -38,6 +38,10 @@ farois_carro_ligados = True
 velas_ligadas = True
 velas_luz_branca = False
 
+luz_ambiente_intensidade = 1.0
+reflexao_difusa_intensidade = 1.0
+reflexao_especular_intensidade = 1.0
+
 def init_camera(largura, altura):
     global lastX, lastY
     lastX = largura / 2
@@ -55,6 +59,8 @@ def key_event(window, key, scancode, action, mods):
     global headbob_enabled
     global lanterna_mao_ligada, lanterna_mao_intensidade
     global farois_carro_ligados, velas_ligadas, velas_luz_branca
+    global luz_ambiente_intensidade
+    global reflexao_difusa_intensidade, reflexao_especular_intensidade
 
     if key == glfw.KEY_ESCAPE and action == glfw.PRESS:
         glfw.set_window_should_close(window, True)
@@ -83,6 +89,24 @@ def key_event(window, key, scancode, action, mods):
 
     if key == glfw.KEY_5 and (action == glfw.PRESS or action == glfw.REPEAT):
         lanterna_mao_intensidade = min(3.0, lanterna_mao_intensidade + 0.1)
+
+    if key == glfw.KEY_Z and (action == glfw.PRESS or action == glfw.REPEAT):
+        luz_ambiente_intensidade = max(0.0, luz_ambiente_intensidade - 0.1)
+
+    if key == glfw.KEY_X and (action == glfw.PRESS or action == glfw.REPEAT):
+        luz_ambiente_intensidade = min(3.0, luz_ambiente_intensidade + 0.1)
+
+    if key == glfw.KEY_C and (action == glfw.PRESS or action == glfw.REPEAT):
+        reflexao_difusa_intensidade = max(0.0, reflexao_difusa_intensidade - 0.1)
+
+    if key == glfw.KEY_V and (action == glfw.PRESS or action == glfw.REPEAT):
+        reflexao_difusa_intensidade = min(3.0, reflexao_difusa_intensidade + 0.1)
+
+    if key == glfw.KEY_N and (action == glfw.PRESS or action == glfw.REPEAT):
+        reflexao_especular_intensidade = max(0.0, reflexao_especular_intensidade - 0.1)
+
+    if key == glfw.KEY_M and (action == glfw.PRESS or action == glfw.REPEAT):
+        reflexao_especular_intensidade = min(3.0, reflexao_especular_intensidade + 0.1)
 
     cameraSpeed = 15 * deltaTime
 
