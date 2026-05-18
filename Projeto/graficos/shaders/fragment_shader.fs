@@ -126,7 +126,7 @@ void main()
                 1.0 / (1.0 + 0.15 * distance + 0.25 * distance * distance);
 
             //////////////////////////////////////////////////////
-            // 🔥 FLICKER POR VELA
+            //  FLICKER POR VELA
             //////////////////////////////////////////////////////
 
             float flicker =
