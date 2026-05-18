@@ -32,12 +32,15 @@ lastY = 0
 
 polygonal_mode = False
 
+# Estados das fontes de luz controladas por teclado.
 lanterna_mao_ligada = True
 lanterna_mao_intensidade = 1.0
 farois_carro_ligados = True
 velas_ligadas = True
 velas_luz_branca = False
 
+# Fatores globais usados no shader para ajustar o modelo de iluminacao.
+ambiente_ligado = True
 luz_ambiente_intensidade = 1.0
 reflexao_difusa_intensidade = 1.0
 reflexao_especular_intensidade = 1.0
@@ -59,6 +62,7 @@ def key_event(window, key, scancode, action, mods):
     global headbob_enabled
     global lanterna_mao_ligada, lanterna_mao_intensidade
     global farois_carro_ligados, velas_ligadas, velas_luz_branca
+    global ambiente_ligado
     global luz_ambiente_intensidade
     global reflexao_difusa_intensidade, reflexao_especular_intensidade
 
@@ -84,12 +88,17 @@ def key_event(window, key, scancode, action, mods):
     if key == glfw.KEY_6 and action == glfw.PRESS:
         velas_luz_branca = not velas_luz_branca
 
+    if key == glfw.KEY_7 and action == glfw.PRESS:
+        ambiente_ligado = not ambiente_ligado
+
+    # A intensidade da lanterna pode ser ajustada segurando as teclas.
     if key == glfw.KEY_4 and (action == glfw.PRESS or action == glfw.REPEAT):
         lanterna_mao_intensidade = max(0.0, lanterna_mao_intensidade - 0.1)
 
     if key == glfw.KEY_5 and (action == glfw.PRESS or action == glfw.REPEAT):
         lanterna_mao_intensidade = min(3.0, lanterna_mao_intensidade + 0.1)
 
+    # Controles globais de iluminacao exigidos no Projeto 3.
     if key == glfw.KEY_Z and (action == glfw.PRESS or action == glfw.REPEAT):
         luz_ambiente_intensidade = max(0.0, luz_ambiente_intensidade - 0.1)
 

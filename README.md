@@ -64,6 +64,7 @@ O-Assombro é um cenário tridimensional composto por ambientes interno e extern
 | Diminuir intensidade da lanterna da mão | 4 |
 | Aumentar intensidade da lanterna da mão | 5 |
 | Alternar luz das velas entre amarela e branca | 6 |
+| Ligar/desligar luz ambiente | 7 |
 | Diminuir / aumentar luz ambiente | Z / X |
 | Diminuir / aumentar reflexão difusa | C / V |
 | Diminuir / aumentar reflexão especular | N / M |

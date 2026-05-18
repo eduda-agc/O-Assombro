@@ -24,6 +24,7 @@ uniform float globalSpecularStrength;
 uniform float materialDiffuse;
 uniform float materialSpecular;
 uniform bool receiveCandleLight;
+uniform bool receiveExternalLight;
 
 uniform float time;
 
@@ -46,6 +47,7 @@ void main()
     vec3 totalLighting = vec3(0.015 * globalAmbientStrength);
     vec3 emissiveGlow = vec3(0.0);
 
+    // Caixa aproximada do interior da casa usada para limitar as velas.
     bool insideCandleBox =
         FragPos.x >= candleMin.x &&
         FragPos.x <= candleMax.x &&
@@ -60,7 +62,8 @@ void main()
 
     for(int i = 0; i < 3; i++)
     {
-        if(insideCandleBox && i > 0)
+        // As luzes 1 e 2 sao os farois; alguns objetos internos ignoram essas luzes.
+        if(!receiveExternalLight && i > 0)
             continue;
 
         vec3 lightVector = lightPos[i] - FragPos;
@@ -109,6 +112,7 @@ void main()
         float attenuation =
             1.0 / (1.0 + linear * distance + quadratic * distance * distance);
 
+        // Componentes classicas do modelo de iluminacao: ambiente, difusa e especular.
         vec3 ambient =
             ambientStrength * globalAmbientStrength * lightColor[i];
 
@@ -143,6 +147,7 @@ void main()
     // VELAS (INTERIOR)
     //////////////////////////////////////////////////////
 
+    // Velas so iluminam objetos internos marcados para receber essa luz.
     if(receiveCandleLight && insideCandleBox)
     {
         for(int i = 3; i < NUM_LIGHTS; i++)
@@ -157,7 +162,7 @@ void main()
                 1.0 / (1.0 + 0.15 * distance + 0.25 * distance * distance);
 
             //////////////////////////////////////////////////////
-            //  FLICKER POR VELA
+            // FLICKER POR VELA
             //////////////////////////////////////////////////////
 
             float flicker =
@@ -194,6 +199,7 @@ void main()
 
             totalLighting += ambient + diffuse + specular;
 
+            // Pequeno brilho no ponto da chama para destacar a fonte de luz.
             float flameGlow = smoothstep(0.65, 0.0, distance);
             emissiveGlow += candleColor * flameGlow * 1.8;
         }

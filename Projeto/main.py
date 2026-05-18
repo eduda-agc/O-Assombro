@@ -506,12 +506,14 @@ while not glfw.window_should_close(window):
         0.0
     )
 
+    # Limites aproximados do interior da casa para o shader.
     glUniform3f(glGetUniformLocation(program, "candleMin"),
     8.0, -6.0, -13.0)
 
     glUniform3f(glGetUniformLocation(program, "candleMax"),
-    21.0, -1.2, -2.3)
+    21.0, 0.5, -2.3)
 
+    # Posicao da camera usada no calculo da reflexao especular.
     glUniform3f(
         glGetUniformLocation(program, "viewPos"),
         controls.cameraPos.x,
@@ -519,9 +521,10 @@ while not glfw.window_should_close(window):
         controls.cameraPos.z
     )
 
+    # Intensidades globais de ambiente, difusa e especular.
     glUniform1f(
         glGetUniformLocation(program, "globalAmbientStrength"),
-        controls.luz_ambiente_intensidade
+        controls.luz_ambiente_intensidade if controls.ambiente_ligado else 0.0
     )
 
     glUniform1f(
