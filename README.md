@@ -25,8 +25,8 @@ O-Assombro é um cenário tridimensional composto por ambientes interno e extern
 
 | Componente        | Descrição                                      |
 |------------------|-----------------------------------------------|
-| Ambiente Interno | Espaço fechado ()      |
-| Ambiente Externo | Espaço aberto ()        |
+| Ambiente Interno | Espaço fechado (casa)      |
+| Ambiente Externo | Espaço aberto (floresta)        |
 | Modelos 3D       | Objetos importados em formato `.obj`          |
 | Texturas         | Imagens aplicadas aos modelos                 |
 | Câmera           | Sistema de navegação no cenário               |
