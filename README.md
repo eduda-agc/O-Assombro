@@ -41,6 +41,7 @@ O-Assombro é um cenário tridimensional composto por ambientes interno e extern
 | Controles via teclado      | Implementado    |                                |
 | Alternância de malha (wireframe) | Implementado | Tecla 'P'                      |
 | Transformações (escala, rotação, translação) | Implementado | Controle individual por modelo |
+| Iluminação interativa | Implementado | Lanternas, faróis e velas controlados pelo teclado |
 
 ---
 
@@ -50,13 +51,23 @@ O-Assombro é um cenário tridimensional composto por ambientes interno e extern
 |----------------------|-------------|
 | Caminhar pela cena          | A W S D |
 | Movimento vertical câmera | Setas cima / baixo |
-| Translação carro | Setas esqueda / direita |
+| Translação carro | Setas esquerda / direita |
 | Rotação da abóbora | I / K |
 | Rotação cadeira | R / F |
 | Translação cadeira | T / G |
 | Translação mesa | Y / B |
 | Escala fantasma | U / J |
 | Escala e translação menina | Jumpscare! |
+| Ligar/desligar lanterna da mão | 1 |
+| Ligar/desligar faróis do carro | 2 |
+| Ligar/desligar luz das velas | 3 |
+| Diminuir intensidade da lanterna da mão | 4 |
+| Aumentar intensidade da lanterna da mão | 5 |
+| Alternar luz das velas entre amarela e branca | 6 |
+| Ligar/desligar luz ambiente | 7 |
+| Diminuir / aumentar luz ambiente | Z / X |
+| Diminuir / aumentar reflexão difusa | C / V |
+| Diminuir / aumentar reflexão especular | N / M |
 
 ---
 
@@ -69,7 +80,7 @@ O-Assombro é um cenário tridimensional composto por ambientes interno e extern
 - Implementação de navegação por câmera
 - Uso de arquivos `.obj`
 - Renderização com pipeline moderno do OpenGL
-- Sem uso de iluminação
+- Uso de iluminação ambiente, difusa e especular
 
 ---
 

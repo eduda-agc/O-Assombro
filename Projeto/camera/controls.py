@@ -32,6 +32,19 @@ lastY = 0
 
 polygonal_mode = False
 
+# Estados das fontes de luz controladas por teclado.
+lanterna_mao_ligada = True
+lanterna_mao_intensidade = 1.0
+farois_carro_ligados = True
+velas_ligadas = True
+velas_luz_branca = False
+
+# Fatores globais usados no shader para ajustar o modelo de iluminacao.
+ambiente_ligado = True
+luz_ambiente_intensidade = 1.0
+reflexao_difusa_intensidade = 1.0
+reflexao_especular_intensidade = 1.0
+
 def init_camera(largura, altura):
     global lastX, lastY
     lastX = largura / 2
@@ -47,6 +60,11 @@ def key_event(window, key, scancode, action, mods):
     global cameraPos, cameraFront, cameraUp, polygonal_mode
     global move_forward, move_backward, move_left, move_right
     global headbob_enabled
+    global lanterna_mao_ligada, lanterna_mao_intensidade
+    global farois_carro_ligados, velas_ligadas, velas_luz_branca
+    global ambiente_ligado
+    global luz_ambiente_intensidade
+    global reflexao_difusa_intensidade, reflexao_especular_intensidade
 
     if key == glfw.KEY_ESCAPE and action == glfw.PRESS:
         glfw.set_window_should_close(window, True)
@@ -57,6 +75,47 @@ def key_event(window, key, scancode, action, mods):
     #tecla para ligar/desligar o head bob
     if key == glfw.KEY_H and action == glfw.PRESS:
         headbob_enabled = not headbob_enabled
+
+    if key == glfw.KEY_1 and action == glfw.PRESS:
+        lanterna_mao_ligada = not lanterna_mao_ligada
+
+    if key == glfw.KEY_2 and action == glfw.PRESS:
+        farois_carro_ligados = not farois_carro_ligados
+
+    if key == glfw.KEY_3 and action == glfw.PRESS:
+        velas_ligadas = not velas_ligadas
+
+    if key == glfw.KEY_6 and action == glfw.PRESS:
+        velas_luz_branca = not velas_luz_branca
+
+    if key == glfw.KEY_7 and action == glfw.PRESS:
+        ambiente_ligado = not ambiente_ligado
+
+    # A intensidade da lanterna pode ser ajustada segurando as teclas.
+    if key == glfw.KEY_4 and (action == glfw.PRESS or action == glfw.REPEAT):
+        lanterna_mao_intensidade = max(0.0, lanterna_mao_intensidade - 0.1)
+
+    if key == glfw.KEY_5 and (action == glfw.PRESS or action == glfw.REPEAT):
+        lanterna_mao_intensidade = min(3.0, lanterna_mao_intensidade + 0.1)
+
+    # Controles globais de iluminacao exigidos no Projeto 3.
+    if key == glfw.KEY_Z and (action == glfw.PRESS or action == glfw.REPEAT):
+        luz_ambiente_intensidade = max(0.0, luz_ambiente_intensidade - 0.1)
+
+    if key == glfw.KEY_X and (action == glfw.PRESS or action == glfw.REPEAT):
+        luz_ambiente_intensidade = min(3.0, luz_ambiente_intensidade + 0.1)
+
+    if key == glfw.KEY_C and (action == glfw.PRESS or action == glfw.REPEAT):
+        reflexao_difusa_intensidade = max(0.0, reflexao_difusa_intensidade - 0.1)
+
+    if key == glfw.KEY_V and (action == glfw.PRESS or action == glfw.REPEAT):
+        reflexao_difusa_intensidade = min(3.0, reflexao_difusa_intensidade + 0.1)
+
+    if key == glfw.KEY_N and (action == glfw.PRESS or action == glfw.REPEAT):
+        reflexao_especular_intensidade = max(0.0, reflexao_especular_intensidade - 0.1)
+
+    if key == glfw.KEY_M and (action == glfw.PRESS or action == glfw.REPEAT):
+        reflexao_especular_intensidade = min(3.0, reflexao_especular_intensidade + 0.1)
 
     cameraSpeed = 15 * deltaTime
 

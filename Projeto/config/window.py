@@ -6,7 +6,7 @@ def create_window(largura, altura):
     glfw.init()
     glfw.window_hint(glfw.VISIBLE, glfw.FALSE)
 
-    # 🔥 ADICIONAR ISSO
+    # Configuracao do contexto OpenGL
     glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
     glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 2)
     glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
