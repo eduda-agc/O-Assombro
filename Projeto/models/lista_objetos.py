@@ -20,7 +20,7 @@ MATERIAIS = {
     "cadeiras": {"diffuse": 0.95, "specular": 0.22, "receive_candles": True, "receive_external": False},
     "cama": {"diffuse": 0.90, "specular": 0.12, "receive_candles": True, "receive_external": False},
     "carro": {"diffuse": 0.85, "specular": 0.70, "receive_candles": False, "receive_external": True},
-    "casa": {"diffuse": 0.95, "specular": 0.16, "receive_candles": False, "receive_external": True},
+    "casa": {"diffuse": 0.95, "specular": 0.16, "receive_candles": True, "receive_external": True},
     "fantasma": {"diffuse": 0.70, "specular": 0.45, "receive_candles": True, "receive_external": False},
     "garota": {"diffuse": 0.80, "specular": 0.20, "receive_candles": True, "receive_external": False},
     "lampada_mao": {"diffuse": 0.90, "specular": 0.55, "receive_candles": False, "receive_external": False},
@@ -335,7 +335,7 @@ def desenha_opacos(program, desenha):
         quantosVertices_vela_parede,
         80,
         0, 1, 0,
-        13.25, -1.5, -5,
+        13.30, -1.5, -5,
         0.02, 0.02, 0.02,
         textura_vela_parede[0]
     )
@@ -346,7 +346,7 @@ def desenha_opacos(program, desenha):
         quantosVertices_vela_parede,
         80,
         0, 1, 0,
-        13.28, -1.5, -8,
+        13.30, -1.5, -8,
         0.02, 0.02, 0.02,
         textura_vela_parede[0]
     )
