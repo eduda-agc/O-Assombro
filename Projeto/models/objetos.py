@@ -280,7 +280,8 @@ def desenha_objeto(
     material_diffuse=1.0,
     material_specular=0.25,
     receive_candle_light=False,
-    receive_external_light=True
+    receive_external_light=True,
+    candle_backfaces_only=False
 ):
 
     mat_model = model(
@@ -326,6 +327,11 @@ def desenha_objeto(
     glUniform1i(
         glGetUniformLocation(program, "receiveExternalLight"),
         receive_external_light
+    )
+
+    glUniform1i(
+        glGetUniformLocation(program, "candleBackfacesOnly"),
+        candle_backfaces_only
     )
 
     glDrawArrays(
