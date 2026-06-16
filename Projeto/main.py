@@ -679,6 +679,7 @@ while not glfw.window_should_close(window):
     objs.desenha_opacos(
         program,
         True,
+        not controls.usar_candle_box,
         not controls.usar_candle_box
     )
 

@@ -52,7 +52,8 @@ def desenha_objeto(
     s_y,
     s_z,
     textureId,
-    receive_candles_override=None
+    receive_candles_override=None,
+    candle_backfaces_only=False
 ):
 
     # O vertice inicial identifica qual malha esta sendo desenhada.
@@ -84,7 +85,8 @@ def desenha_objeto(
         material["diffuse"],
         material["specular"],
         receive_candles,
-        material["receive_external"]
+        material["receive_external"],
+        candle_backfaces_only
     )
 
 ########################################################
@@ -248,7 +250,12 @@ def desenha_objetos_internos(program):
 # OBJETOS EXTERNOS / GERAIS
 ########################################################
 
-def desenha_opacos(program, desenha, casa_recebe_velas=True):
+def desenha_opacos(
+    program,
+    desenha,
+    casa_recebe_velas=True,
+    casa_velas_backfaces=False
+):
 
     if not desenha:
         return
@@ -298,7 +305,8 @@ def desenha_opacos(program, desenha, casa_recebe_velas=True):
         13, -4.2, 0,
         0.8, 0.8, 0.8,
         textura_casa_amarela[0],
-        casa_recebe_velas
+        casa_recebe_velas,
+        casa_velas_backfaces
     )
 
     ####################################################

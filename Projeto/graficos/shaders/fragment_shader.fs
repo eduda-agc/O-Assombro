@@ -39,6 +39,7 @@ uniform float materialSpecular;
 // Permitem escolher quais grupos de luz afetam cada objeto.
 uniform bool receiveCandleLight;
 uniform bool receiveExternalLight;
+uniform bool candleBackfacesOnly;
 
 // Tempo da aplicacao, usado para animar a oscilacao das velas.
 uniform float time;
@@ -192,10 +193,16 @@ void main()
     // Luzes pontuais: iluminam em todas as direcoes e oscilam com o tempo.
     //////////////////////////////////////////////////////
 
+    bool candleFaceAllowed =
+        !candleBackfacesOnly || !gl_FrontFacing;
+
     // Objetos escolhem individualmente se recebem a luz das velas; a caixa
-    // pode ser ligada/desligada pela aplicacao.
-    if(receiveCandleLight && (!useCandleBox || insideCandleBox))
+    // pode ser ligada/desligada pela aplicacao. A casa pode receber velas
+    // apenas nas faces internas.
+    if(receiveCandleLight && candleFaceAllowed && (!useCandleBox || insideCandleBox))
     {
+        vec3 candleNorm = (candleBackfacesOnly && !gl_FrontFacing) ? -norm : norm;
+
         for(int i = 3; i < NUM_LIGHTS; i++)
         {
             // Como as velas sao pontuais, nao e necessario calcular cone.
@@ -203,7 +210,7 @@ void main()
             float distance = length(lightVector);
             vec3 toLight = normalize(lightVector);
 
-            float diff = max(dot(norm, toLight), 0.0);
+            float diff = max(dot(candleNorm, toLight), 0.0);
 
             // Queda mais rapida para manter a iluminacao proxima da chama.
             float attenuation =
@@ -239,7 +246,7 @@ void main()
                 candleColor;
 
             vec3 viewDir = normalize(viewPos - FragPos);
-            vec3 reflectDir = reflect(-toLight, norm);
+            vec3 reflectDir = reflect(-toLight, candleNorm);
             float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32.0);
 
             vec3 specular =
