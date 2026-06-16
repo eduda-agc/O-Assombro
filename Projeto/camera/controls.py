@@ -38,7 +38,6 @@ lanterna_mao_intensidade = 1.0
 farois_carro_ligados = True
 velas_ligadas = True
 velas_luz_branca = False
-usar_candle_box = False
 
 # Fatores globais usados no shader para ajustar o modelo de iluminacao.
 ambiente_ligado = True
@@ -63,7 +62,6 @@ def key_event(window, key, scancode, action, mods):
     global headbob_enabled
     global lanterna_mao_ligada, lanterna_mao_intensidade
     global farois_carro_ligados, velas_ligadas, velas_luz_branca
-    global usar_candle_box
     global ambiente_ligado
     global luz_ambiente_intensidade
     global reflexao_difusa_intensidade, reflexao_especular_intensidade
@@ -92,9 +90,6 @@ def key_event(window, key, scancode, action, mods):
 
     if key == glfw.KEY_7 and action == glfw.PRESS:
         ambiente_ligado = not ambiente_ligado
-
-    if key == glfw.KEY_0 and action == glfw.PRESS:
-        usar_candle_box = not usar_candle_box
 
     # A intensidade da lanterna pode ser ajustada segurando as teclas.
     if key == glfw.KEY_4 and (action == glfw.PRESS or action == glfw.REPEAT):

@@ -19,11 +19,6 @@ uniform vec3 lightPos[NUM_LIGHTS];
 uniform vec3 lightDir[NUM_LIGHTS];
 uniform vec3 lightColor[NUM_LIGHTS];
 
-// Limites de uma caixa que aproxima o interior da casa.
-uniform vec3 candleMin;
-uniform vec3 candleMax;
-uniform bool useCandleBox;
-
 // Posicao da camera, usada para calcular o reflexo especular.
 uniform vec3 viewPos;
 
@@ -70,15 +65,6 @@ void main()
     // Iluminacao minima da cena e brilho adicional proximo das chamas.
     vec3 totalLighting = vec3(0.015 * globalAmbientStrength);
     vec3 emissiveGlow = vec3(0.0);
-
-    // Quando ativo, limita as velas a uma regiao interna da casa.
-    bool insideCandleBox =
-        FragPos.x >= candleMin.x &&
-        FragPos.x <= candleMax.x &&
-        FragPos.y >= candleMin.y &&
-        FragPos.y <= candleMax.y &&
-        FragPos.z >= candleMin.z &&
-        FragPos.z <= candleMax.z;
 
     //////////////////////////////////////////////////////
     // LUZES EXTERNAS (0..2)
@@ -196,10 +182,9 @@ void main()
     bool candleFaceAllowed =
         !candleBackfacesOnly || !gl_FrontFacing;
 
-    // Objetos escolhem individualmente se recebem a luz das velas; a caixa
-    // pode ser ligada/desligada pela aplicacao. A casa pode receber velas
-    // apenas nas faces internas.
-    if(receiveCandleLight && candleFaceAllowed && (!useCandleBox || insideCandleBox))
+    // Objetos escolhem individualmente se recebem a luz das velas. A casa
+    // pode receber velas apenas nas faces internas.
+    if(receiveCandleLight && candleFaceAllowed)
     {
         vec3 candleNorm = (candleBackfacesOnly && !gl_FrontFacing) ? -norm : norm;
 

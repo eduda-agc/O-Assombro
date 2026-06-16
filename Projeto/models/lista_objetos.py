@@ -253,8 +253,7 @@ def desenha_objetos_internos(program):
 def desenha_opacos(
     program,
     desenha,
-    casa_recebe_velas=True,
-    casa_velas_backfaces=False
+    casa_velas_backfaces=True
 ):
 
     if not desenha:
@@ -305,7 +304,7 @@ def desenha_opacos(
         13, -4.2, 0,
         0.8, 0.8, 0.8,
         textura_casa_amarela[0],
-        casa_recebe_velas,
+        True,
         casa_velas_backfaces
     )
 
