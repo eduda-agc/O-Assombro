@@ -22,6 +22,7 @@ uniform vec3 lightColor[NUM_LIGHTS];
 // Limites de uma caixa que aproxima o interior da casa.
 uniform vec3 candleMin;
 uniform vec3 candleMax;
+uniform bool useCandleBox;
 
 // Posicao da camera, usada para calcular o reflexo especular.
 uniform vec3 viewPos;
@@ -69,8 +70,7 @@ void main()
     vec3 totalLighting = vec3(0.015 * globalAmbientStrength);
     vec3 emissiveGlow = vec3(0.0);
 
-    // Testa se o fragmento esta dentro da casa. A caixa evita que as luzes
-    // das velas atravessem as paredes e iluminem o ambiente externo.
+    // Quando ativo, limita as velas a uma regiao interna da casa.
     bool insideCandleBox =
         FragPos.x >= candleMin.x &&
         FragPos.x <= candleMax.x &&
@@ -192,8 +192,9 @@ void main()
     // Luzes pontuais: iluminam em todas as direcoes e oscilam com o tempo.
     //////////////////////////////////////////////////////
 
-    // As duas condicoes limitam as velas aos objetos e a regiao internos.
-    if(receiveCandleLight && insideCandleBox)
+    // Objetos escolhem individualmente se recebem a luz das velas; a caixa
+    // pode ser ligada/desligada pela aplicacao.
+    if(receiveCandleLight && (!useCandleBox || insideCandleBox))
     {
         for(int i = 3; i < NUM_LIGHTS; i++)
         {
